@@ -8,7 +8,7 @@ public class WatchpadBackendApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(WatchpadBackendApplication.class, args);
-		System.out.println("This is Watchpad."); 
+		System.out.println("This is Watchpad"); 
 	}
 
 }
