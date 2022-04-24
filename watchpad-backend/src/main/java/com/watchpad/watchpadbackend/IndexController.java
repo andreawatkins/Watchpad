@@ -1,4 +1,4 @@
-package com.watchpad.watchpadbackend;
+ package com.watchpad.watchpadbackend;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class IndexController {
     @GetMapping("/")
     public String index() {
-        return "Watchpad is running!"; 
+        return "Watchpad is running!";  
     }
     
-}
+} 
