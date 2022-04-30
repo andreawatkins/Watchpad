@@ -52,7 +52,7 @@ class UserServiceTest {
 
 
         ResponseEntity<String> result = userService.addUser(user);
-        ResponseEntity<String> expected = new ResponseEntity("User Exists", HttpStatus.CONFLICT);
+        ResponseEntity<String> expected = new ResponseEntity("User already exists!", HttpStatus.CONFLICT);
         assertEquals(result, expected);
     }
 
@@ -71,12 +71,13 @@ class UserServiceTest {
     @Test
     void loginShouldBeSuccessful() {
         User user = new User("test@gmail.com", "username", "$2a$10$UoGCN5fLF5VxbJJqgniWV.gdusUWMB0tI.RtYmqMJq/OvKZs8h1Nq");
+        Optional<User> optionalUser = Optional.of(user);
         when(userRepository.findUserByEmail(user.getEmail())).thenReturn(Optional.of(user));
 
         User userCredentials = new User("test@gmail.com", "", "password");
 
-        ResponseEntity<String> result = userService.login(userCredentials);
-        ResponseEntity<String> expected = new ResponseEntity<>("User logged in!", HttpStatus.OK);
+        ResponseEntity<Object> result = userService.login(userCredentials);
+        ResponseEntity<Object> expected = new ResponseEntity<>(optionalUser, HttpStatus.OK);
         assertEquals(expected, result);
     }
 
@@ -86,8 +87,8 @@ class UserServiceTest {
         when(userRepository.findUserByEmail(user.getEmail())).thenReturn(Optional.empty());
 
 
-        ResponseEntity<String> result = userService.login(user);
-        ResponseEntity<String> expected = new ResponseEntity<>("Email is not in our database", HttpStatus.BAD_REQUEST);
+        ResponseEntity<Object> result = userService.login(user);
+        ResponseEntity<Object> expected = new ResponseEntity<>("This email does not exist in our database.", HttpStatus.BAD_REQUEST);
         assertEquals(expected, result);
     }
 
@@ -98,8 +99,8 @@ class UserServiceTest {
 
         User userCredentials = new User("test@gmail.com", "", "password2");
 
-        ResponseEntity<String> result = userService.login(userCredentials);
-        ResponseEntity<String> expected = new ResponseEntity<>("Passwords don't match!", HttpStatus.CONFLICT);
+        ResponseEntity<Object> result = userService.login(userCredentials);
+        ResponseEntity<Object> expected = new ResponseEntity<>("Passwords don't match!", HttpStatus.CONFLICT);
         assertEquals(expected, result);
     }
 }
