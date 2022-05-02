@@ -27,28 +27,28 @@ public class UserService {
         try {
             Optional<User> queriedUser = userRepository.findUserByEmailOrUsername(user.getEmail(), user.getUsername());
             if (queriedUser.isPresent()) {
-                return new ResponseEntity("User Exists", HttpStatus.CONFLICT);
+                return new ResponseEntity("User already exists!", HttpStatus.CONFLICT);
             }
             user.setPassword(passwordEncoder().encode(user.getPassword()));
             user.setPhoto("default-photo");
             userRepository.save(user);
-            return new ResponseEntity<>("User Created", HttpStatus.CREATED);
+            return new ResponseEntity<>("User created!", HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity(e.toString(), HttpStatus.BAD_REQUEST);
         }
     }
 
-    public ResponseEntity<String> login(User user){
+    public ResponseEntity<Object> login(User user){
         Optional<User> queriedUser = userRepository.findUserByEmail(user.getEmail());
         if(queriedUser.isEmpty()) {
-            return new ResponseEntity<>("Email is not in our database", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("This email does not exist in our database.", HttpStatus.BAD_REQUEST);
         }
 
         if(!passwordEncoder().matches(user.getPassword(), queriedUser.get().getPassword())){
             return new ResponseEntity<>("Passwords don't match!", HttpStatus.CONFLICT);
         }
 
-        return new ResponseEntity<>("User logged in!", HttpStatus.OK);
+        return new ResponseEntity<>(queriedUser, HttpStatus.OK);
 
     }
 
