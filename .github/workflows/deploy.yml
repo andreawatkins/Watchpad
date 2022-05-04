@@ -43,8 +43,8 @@ jobs:
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           #aws_session_token: ${{ secrets.AWS_SESSION_TOKEN }}
           use_existing_version_if_available: false
-          application_name: watchpad_backend
-          environment_name: Watchpadbackend-env-1
+          application_name: watchpad-backend
+          environment_name: Watchpadbackend-env
           version_label: ${{github.SHA}}
           region: us-east-1
           deployment_package: watchpad-backend.jar

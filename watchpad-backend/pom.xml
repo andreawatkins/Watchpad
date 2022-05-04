@@ -64,7 +64,7 @@
 	</dependencies>
 
 	<build>
-		<finalName> watchpad-backend</finalName>
+		<finalName>watchpad-backend</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
