@@ -1,4 +1,4 @@
-package com.watchpad.watchpadbackend.TimeComment;
+package com.watchpad.watchpadbackend.Comment;
 
 import lombok.Data;
 import java.sql.Timestamp;
