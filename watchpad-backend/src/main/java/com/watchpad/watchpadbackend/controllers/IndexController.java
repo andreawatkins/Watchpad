@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class IndexController {
     @GetMapping("/")
-    public String index() {
+    public String health() {
         return "Watchpad is running!";  
     }
     
