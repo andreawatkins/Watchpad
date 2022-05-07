@@ -23,6 +23,9 @@ public class TimeComment extends Comment{
     private int dislikes;
 
 
+public TimeComment(Long comment_id, Long media_id, User user, Timestamp comment_timestamp, Timestamp media_timestamp, 
+Content content, boolean spoiler, int likes, int dislikes, Long time_comment_id) {
 
+}
     
 }
