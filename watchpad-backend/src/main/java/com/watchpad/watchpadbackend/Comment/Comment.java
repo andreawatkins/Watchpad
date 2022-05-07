@@ -4,10 +4,7 @@ import lombok.Data;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 import com.watchpad.watchpadbackend.Content.Content;
 import com.watchpad.watchpadbackend.User.User;
@@ -15,18 +12,19 @@ import com.watchpad.watchpadbackend.User.User;
 
 @Data
 @Entity
-public class Comment {
 
-   @Id
+public class Comment {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long comment_id;
-    private Long media_id; 
-    @OneToOne
-    private User user; 
+    private Long media_id;
+    @ManyToOne
+    private User user;
     private Timestamp comment_timestamp;
-    private Timestamp media_timestamp; 
+    private Timestamp media_timestamp;
     @OneToOne
-    private Content content; 
-    private boolean spoiler; 
+    private Content content;
+    private boolean spoiler;
     private int likes;
     private int dislikes;
     
