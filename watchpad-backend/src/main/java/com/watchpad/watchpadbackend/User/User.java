@@ -2,18 +2,19 @@ package com.watchpad.watchpadbackend.User;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.watchpad.watchpadbackend.Follow.Follow;
 import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Data
 public class User {
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

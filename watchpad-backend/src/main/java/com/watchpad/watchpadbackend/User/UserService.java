@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +21,7 @@ public class UserService {
     }
 
     public ResponseEntity<List<User>> getAllUsers() {
-        return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
+        return new ResponseEntity(userRepository.findAll(), HttpStatus.OK);
     }
 
     public ResponseEntity<String> addUser(User user) {
@@ -32,7 +33,7 @@ public class UserService {
             user.setPassword(passwordEncoder().encode(user.getPassword()));
             user.setPhoto("default-photo");
             userRepository.save(user);
-            return new ResponseEntity<>("User created!", HttpStatus.CREATED);
+            return new ResponseEntity("User created!", HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity(e.toString(), HttpStatus.BAD_REQUEST);
         }
