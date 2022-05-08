@@ -3,9 +3,10 @@ import com.watchpad.watchpadbackend.User.User;
 
 import javax.persistence.*;
 
-@Table
+
 @Entity
-public class Rating {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+public abstract class Rating {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,16 +18,16 @@ public class Rating {
     @ManyToOne
     private RatableEntity ratableEntity;
 
-    private boolean rating;
+    private boolean isLiked;
 
     public Rating() {
 
     }
 
-    public Rating(User user, RatableEntity ratableEntity, boolean rating) {
+    public Rating(User user, RatableEntity ratableEntity, boolean isLiked) {
         this.user = user;
         this.ratableEntity = ratableEntity;
-        this.rating = rating;
+        this.isLiked = isLiked;
     }
 
     public Long getId() {
@@ -41,12 +42,12 @@ public class Rating {
         return ratableEntity;
     }
 
-    public boolean getRating() {
-        return rating;
+    public boolean getIsLiked() {
+        return isLiked;
     }
 
-    public void setRating(boolean rating) {
-        this.rating = rating;
+    public void setIsLiked(boolean rating) {
+        this.isLiked = rating;
     }
 
     @Override
@@ -55,7 +56,7 @@ public class Rating {
                 "id=" + id +
                 ", user=" + user +
                 ", ratableEntity=" + ratableEntity +
-                ", rating=" + rating +
+                ", rating=" + isLiked +
                 '}';
     }
 }

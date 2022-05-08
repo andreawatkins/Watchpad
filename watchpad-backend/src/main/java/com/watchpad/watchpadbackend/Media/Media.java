@@ -2,10 +2,8 @@ package com.watchpad.watchpadbackend.Media;
 
 import com.watchpad.watchpadbackend.Comment.Comment;
 import com.watchpad.watchpadbackend.Rating.RatableEntity;
-import com.watchpad.watchpadbackend.User.User;
 
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.List;
@@ -27,10 +25,16 @@ public class Media extends RatableEntity {
         super();
     }
 
+    public String getExternalId() {
+        return externalId;
+    }
+
     @Override
     public String toString() {
         return "Media{" +
-                "comments=" + comments +
+                "Id='" + super.getId() + '\'' +
+                "externalId='" + externalId + '\'' +
+                ", comments=" + comments +
                 '}';
     }
 }
