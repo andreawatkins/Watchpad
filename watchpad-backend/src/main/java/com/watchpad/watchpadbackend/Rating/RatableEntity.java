@@ -3,7 +3,8 @@ package com.watchpad.watchpadbackend.Rating;
 import javax.persistence.*;
 
 @Entity
-public class RatableEntity {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+public abstract class RatableEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

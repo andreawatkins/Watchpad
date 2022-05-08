@@ -1,25 +1,25 @@
-package com.watchpad.watchpadbackend.Rating;
+package com.watchpad.watchpadbackend.MediaRating;
 
-import com.watchpad.watchpadbackend.User.User;
+import com.watchpad.watchpadbackend.Rating.Rating;
+import com.watchpad.watchpadbackend.Rating.RatingService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(path="api/rating")
-public class RatingController {
+@RequestMapping(path="api/media-rating")
+public class MediaRatingController {
 
     private final RatingService ratingService;
 
     @Autowired
-    public RatingController(RatingService ratingsService) {
+    public MediaRatingController(RatingService ratingsService) {
         this.ratingService = ratingsService;
     }
 
-    @GetMapping("/get-ratings")
+    @GetMapping("/get-all")
     public ResponseEntity<List<Rating>> getRatings(){
         return ratingService.getAllRatings();
     }
