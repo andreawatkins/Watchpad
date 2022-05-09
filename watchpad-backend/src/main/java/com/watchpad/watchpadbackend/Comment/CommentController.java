@@ -1,28 +1,33 @@
 package com.watchpad.watchpadbackend.Comment;
 
+import com.watchpad.watchpadbackend.User.User;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController()
-@RequestMapping("api/comment")
+@RequestMapping("/api/comments")
 public class CommentController {
 
-    //@Autowired
-    //private final CommentService commentService;
+@Autowired    
+private final CommentService commentService; 
 
-    /*
-    public CommentController(CommentService commentService) {
+public CommentController(CommentService commentService) {
+    this.commentService = commentService;
+}
+    @PostMapping("")
+    public ResponseEntity<Comment> createComment(@RequestBody CommentDto commentDto, @AuthenticationPrincipal User user){
         
-    }    
-    */
-    /*
-    @GetMapping("/get-comments/{media_id}")
-    public CommentController(@PathVariable Long media_id) {
-        
-        this.commentService.getComments(media_id);
-        */
+        Comment comment = commentService.addComment(commentDto, user);
+        System.out.println(commentDto);
+        return ResponseEntity.ok(comment); 
 
+    }
 }
