@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-public class WatchList {
+public class WatchListEntry {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -19,7 +19,7 @@ public class WatchList {
     @OneToOne
     private User user;
 
-    public WatchList(User user, Media media) {
+    public WatchListEntry(User user, Media media) {
         this.user = user;
         this.media = media;
         timestamp = LocalDateTime.now();
@@ -33,7 +33,7 @@ public class WatchList {
         return media;
     }
 
-    public WatchList() {
+    public WatchListEntry() {
 
     }
 
