@@ -39,9 +39,20 @@ public class CommentService {
         comment.setMedia(media); 
 
         return commentRepo.save(comment); 
-       
-
-
     }
+
+    public ResponseEntity<List<Comment>> getAllComments() {
+        return new ResponseEntity<>(commentRepo.findAll(), HttpStatus.OK);
+    }
+
+   /*  public ResponseEntity<Comment> getCommentByMediaId(String mediaId){
+        Optional<Comment> commentOptional = commentRepo.findByMediaId(mediaId);
+        if(commentOptional.isEmpty()){
+            throw new IllegalStateException("No comments on that media!");
+        }
+
+        return new ResponseEntity<>(commentOptional.get(), HttpStatus.OK);
+    } */
    
+    
 }

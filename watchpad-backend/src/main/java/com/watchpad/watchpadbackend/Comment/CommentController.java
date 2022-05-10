@@ -1,5 +1,7 @@
 package com.watchpad.watchpadbackend.Comment;
 
+import java.util.List;
+
 import com.watchpad.watchpadbackend.User.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,4 +32,16 @@ public CommentController(CommentService commentService) {
         return ResponseEntity.ok(comment); 
 
     }
+
+    @GetMapping("/get-comments")
+    public ResponseEntity<List<Comment>> getComments(){
+        return commentService.getAllComments();
+    }
+
+   /*  @GetMapping("/get-comments-by-media")
+    public ResponseEntity<Comment> getCommentByMediaId(@PathVariable("mediaId") String mediaId){
+        return commentService.getCommentByMediaId(mediaId);
+    } */
+
+
 }
