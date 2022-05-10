@@ -22,5 +22,7 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn -B package --file ./watchpad-backend/pom.xml
+    - name: Run tests with Maven
+        run: mvn -B test --file ./watchpad-backend/pom.xml
 
 
