@@ -1,14 +1,10 @@
 package com.watchpad.watchpadbackend.User;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.watchpad.watchpadbackend.Follow.Follow;
+import com.watchpad.watchpadbackend.WatchList.WatchListEntry;
 import lombok.Data;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,12 +20,33 @@ public class User {
     private String password;
     private String photo;
 
+    @OneToMany
+    private List<WatchListEntry> watchListEntry;
+
     public User() {
     }
+
+
 
     public User(String email, String username, String password) {
         this.email = email;
         this.username = username;
         this.password = password;
+        watchListEntry = new ArrayList<>();
+    }
+
+    public void addMediaToWatchList(WatchListEntry media) {
+        watchListEntry.add(media);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", photo='" + photo + '\'' +
+                '}';
     }
 }
