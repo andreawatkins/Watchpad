@@ -1,0 +1,46 @@
+http://localhost:8080/api/user/sign-up
+
+{
+    "email": "testuser22@email.com",
+    "username": "usertest",
+    "password": "password"
+}
+http://localhost:8080/api/user/sign-up
+
+{
+    "email": "testuser2@email.com",
+    "username": "usertest",
+    "password": "password"
+}
+http://localhost:8080/api/user/sign-up
+{
+    "email": "t3trgrr2@email.com",
+    "username": "usertest2",
+    "password": "password"
+}
+
+http://localhost:8080/api/media/save-media
+
+{
+    "externalId": "234556"
+}
+
+http://localhost:8080/api/comments
+
+{
+    
+    "media": {"id":"1"},
+    "user": {"id":"3"},
+    "comment_timestamp":"2007-12-03T10:15:30",
+    "content":"this is another comment",
+     "spoiler":"true"
+}
+
+{
+    
+    "media": {"id":"1"},
+    "user": {"id":"4"},
+    "comment_timestamp":"2007-12-03T10:15:30",
+    "content":"this is another comment",
+     "spoiler":"true"
+}
