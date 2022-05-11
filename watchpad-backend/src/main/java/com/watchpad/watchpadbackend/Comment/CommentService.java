@@ -29,19 +29,18 @@ public class CommentService {
         this.commentRepo = commentRepository; 
     }
 
-    public Comment addComment(CommentDto commentDto, User user){
-        Comment comment = new Comment(); 
-        Media media = mediaRepo.getById(commentDto.getMediaId()); 
-        comment.setContent(commentDto.getContent()); 
-        comment.setUser(user);
-        comment.setComment_timestamp(LocalDateTime.now());
-        comment.setSpoiler(commentDto.getSpoiler()); 
-        comment.setMedia(media); 
+    public ResponseEntity addComment(Comment comment){
+        
+         commentRepo.save(comment); 
 
-        return commentRepo.save(comment); 
+         return new ResponseEntity("Comment created!", HttpStatus.CREATED);
        
 
 
+    }
+
+    public ResponseEntity<List<Comment>> getAllComments() {
+        return new ResponseEntity<>(commentRepo.findAll(), HttpStatus.OK);
     }
    
 }

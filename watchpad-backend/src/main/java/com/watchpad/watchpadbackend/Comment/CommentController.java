@@ -1,5 +1,7 @@
 package com.watchpad.watchpadbackend.Comment;
 
+import java.util.List;
+
 import com.watchpad.watchpadbackend.User.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +25,15 @@ public CommentController(CommentService commentService) {
     this.commentService = commentService;
 }
     @PostMapping("")
-    public ResponseEntity<Comment> createComment(@RequestBody CommentDto commentDto, @AuthenticationPrincipal User user){
+    public ResponseEntity<Comment> createComment(@RequestBody Comment comment){
         
-        Comment comment = commentService.addComment(commentDto, user);
-        System.out.println(commentDto);
-        return ResponseEntity.ok(comment); 
-
+        return commentService.addComment(comment); 
     }
+
+    @GetMapping("/get-comments")
+    public ResponseEntity<List<Comment>> getComments(){
+        return commentService.getAllComments();
+    }
+
+
 }
