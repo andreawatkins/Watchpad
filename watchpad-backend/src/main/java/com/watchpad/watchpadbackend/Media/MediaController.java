@@ -20,8 +20,8 @@ public class MediaController {
     }
 
     @PostMapping("/save-media")
-    public void registerMedia(@RequestBody Media media) {
-        mediaService.registerMedia(media);
+    public ResponseEntity<String> registerMedia(@RequestBody Media media) {
+        return mediaService.registerMedia(media);
     }
 
     @GetMapping("/get-media")

@@ -20,6 +20,7 @@ public abstract class Rating {
 
     private boolean isLiked;
 
+
     public Rating() {
 
     }
@@ -40,6 +41,10 @@ public abstract class Rating {
 
     public RatableEntity getRatableEntity() {
         return ratableEntity;
+    }
+
+    public void setId(Long newId){
+        this.id = newId;
     }
 
     public boolean getIsLiked() {

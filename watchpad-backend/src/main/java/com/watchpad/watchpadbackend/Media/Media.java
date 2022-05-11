@@ -16,9 +16,13 @@ public class Media extends RatableEntity {
     @OneToMany
     private List<Comment> comments;
 
-    public Media(String externalId){
+    public Media(Long externalId){
         super();
-        this.externalId = externalId;
+        this.setId(externalId);
+    }
+
+    public void setExternalId(String id) {
+        this.externalId = id;
     }
 
     public Media() {
@@ -29,6 +33,8 @@ public class Media extends RatableEntity {
         return externalId;
     }
 
+
+
     @Override
     public String toString() {
         return "Media{" +
@@ -37,4 +43,6 @@ public class Media extends RatableEntity {
                 ", comments=" + comments +
                 '}';
     }
+
+
 }
