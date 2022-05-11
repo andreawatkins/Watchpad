@@ -24,14 +24,12 @@ private final CommentService commentService;
 public CommentController(CommentService commentService) {
     this.commentService = commentService;
 }
-    @PostMapping("")
-    public ResponseEntity<Comment> createComment(@RequestBody CommentDto commentDto, @AuthenticationPrincipal User user){
-        
-        Comment comment = commentService.addComment(commentDto, user);
-        System.out.println(commentDto);
-        return ResponseEntity.ok(comment); 
+@PostMapping("")
+public ResponseEntity<Comment> createComment(@RequestBody Comment comment){
+    
+    return commentService.addComment(comment); 
+}
 
-    }
 
     @GetMapping("/get-comments")
     public ResponseEntity<List<Comment>> getComments(){
@@ -43,10 +41,6 @@ public CommentController(CommentService commentService) {
         return commentService.getCommentByMediaId(mediaId);
     } */
 
-       @GetMapping("/get-comments-by-id{commentId}")
-    public ResponseEntity<Comment> getCommentByCommentId(@PathVariable("commentId") Long comment_Id){
-        return commentService.getCommentByCommentId(comment_Id);
-    } 
 
 
 }
