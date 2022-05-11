@@ -30,10 +30,20 @@ public CommentController(CommentService commentService) {
         return commentService.addComment(comment); 
     }
 
+
     @GetMapping("/get-comments")
     public ResponseEntity<List<Comment>> getComments(){
         return commentService.getAllComments();
     }
 
+   /*  @GetMapping("/get-comments-by-media")
+    public ResponseEntity<Comment> getCommentByMediaId(@PathVariable("mediaId") String mediaId){
+        return commentService.getCommentByMediaId(mediaId);
+    } */
+
+       @GetMapping("/get-comments-by-id{commentId}")
+    public ResponseEntity<Comment> getCommentByCommentId(@PathVariable("commentId") Long comment_Id){
+        return commentService.getCommentByCommentId(comment_Id);
+    } 
 
 }

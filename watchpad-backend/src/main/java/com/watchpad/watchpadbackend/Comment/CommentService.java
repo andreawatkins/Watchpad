@@ -29,6 +29,7 @@ public class CommentService {
         this.commentRepo = commentRepository; 
     }
 
+
     public ResponseEntity addComment(Comment comment){
         
          commentRepo.save(comment); 
@@ -36,11 +37,28 @@ public class CommentService {
          return new ResponseEntity("Comment created!", HttpStatus.CREATED);
        
 
-
-    }
-
     public ResponseEntity<List<Comment>> getAllComments() {
         return new ResponseEntity<>(commentRepo.findAll(), HttpStatus.OK);
     }
+
+   /*  public ResponseEntity<Comment> getCommentByMediaId(String mediaId){
+        Optional<Comment> commentOptional = commentRepo.findByMediaId(mediaId);
+        if(commentOptional.isEmpty()){
+            throw new IllegalStateException("No comments on that media!");
+        }
+
+        return new ResponseEntity<>(commentOptional.get(), HttpStatus.OK);
+    } */
+
+       public ResponseEntity<Comment> getCommentByCommentId(Long comment_id){
+        Optional<Comment> commentOptional = commentRepo.findByCommentId(comment_id);
+        if(commentOptional.isEmpty()){
+            throw new IllegalStateException("No comment with that id!");
+        }
+
+        return new ResponseEntity<>(commentOptional.get(), HttpStatus.OK);
+    } 
+
    
+
 }
