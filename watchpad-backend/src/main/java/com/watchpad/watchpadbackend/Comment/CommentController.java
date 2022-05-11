@@ -5,6 +5,7 @@ import java.util.List;
 import com.watchpad.watchpadbackend.User.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,10 +37,10 @@ public ResponseEntity<Comment> createComment(@RequestBody Comment comment){
         return commentService.getAllComments();
     }
 
-   /*  @GetMapping("/get-comments-by-media")
-    public ResponseEntity<Comment> getCommentByMediaId(@PathVariable("mediaId") String mediaId){
-        return commentService.getCommentByMediaId(mediaId);
-    } */
+   @GetMapping("/get-comments-by-media")
+    public ResponseEntity<List<Comment>> getCommentByMediaId(@Param("id") Long id){
+        return commentService.getCommentsByMediaId(id);
+    } 
 
 
 

@@ -48,7 +48,9 @@ public class CommentService {
         return new ResponseEntity<>(commentRepo.findAll(), HttpStatus.OK);
     }
 
-   
-   
+    public ResponseEntity<List<Comment>> getCommentsByMediaId(Long id) {
+        return new ResponseEntity(commentRepo.findByMediaId(id), HttpStatus.OK); 
+
+    }
 }
 
