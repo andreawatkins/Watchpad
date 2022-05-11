@@ -26,8 +26,10 @@ public class MediaService {
                 return new ResponseEntity("Media already exists with externalId!", HttpStatus.CONFLICT);
             }
 
+            media.setExternalId(media.getId().toString());
             mediaRepository.save(media);
-            return new ResponseEntity<>("Media registered!", HttpStatus.CREATED);
+            return new ResponseEntity("Media registered!", HttpStatus.CREATED);
+
         } catch (IllegalArgumentException e) {
             return new ResponseEntity(e.toString(), HttpStatus.BAD_REQUEST);
         }

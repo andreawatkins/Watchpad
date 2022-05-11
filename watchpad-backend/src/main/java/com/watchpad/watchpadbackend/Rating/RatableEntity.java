@@ -7,7 +7,6 @@ import javax.persistence.*;
 public abstract class RatableEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     public RatableEntity() {
@@ -18,6 +17,9 @@ public abstract class RatableEntity {
         return id;
     }
 
+    public void setId(Long newId){
+        this.id = newId;
+    }
     @Override
     public String toString() {
         return "RatableEntity{" +

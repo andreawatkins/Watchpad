@@ -24,36 +24,40 @@ public class MediaRepositoryTest {
     @Test
     void findMediaById() {
 
-        Media media = new Media();
+        Media media = new Media(123123L);
         mediaRepository.save(media);
 
-        Optional<Media> expect = mediaRepository.findMediaByIdOrExternalId(media.getId(),"");
+        Optional<Media> expect = mediaRepository.findMediaByIdOrExternalId(media.getId(),"123123");
         assertTrue(expect.isPresent());
     }
 
     @Test
     void findMediaByExternalId() {
-        String externalId = "123456";
+        Long externalId = 111111L;
         Media media = new Media(externalId);
+        media.setExternalId(externalId.toString());
 
         mediaRepository.save(media);
-        Optional<Media> expect = mediaRepository.findByExternalId(externalId);
+        System.out.println(mediaRepository.findAll());
+
+        Optional<Media> expect = mediaRepository.findByExternalId(externalId.toString());
         assertTrue(expect.isPresent());
     }
 
     @Test
     void findMediaByIdOrExternalId() {
-        String externalId = "456234";
+        Long externalId = 456234L;
         Media media = new Media(externalId);
+        media.setExternalId(externalId.toString());
 
         mediaRepository.save(media);
-        Optional<Media> expect = mediaRepository.findMediaByIdOrExternalId(media.getId(), externalId);
+        Optional<Media> expect = mediaRepository.findMediaByIdOrExternalId(media.getId(), "456234");
         assertTrue(expect.isPresent());
     }
 
     @Test
     void findMediaByIdShouldReturnNull() {
-        Media media = new Media();
+        Media media = new Media(565656L);
         mediaRepository.save(media);
 
         Media otherMedia = new Media();
@@ -62,16 +66,5 @@ public class MediaRepositoryTest {
         assertTrue(expect.isEmpty());
     }
 
-    @Test
-    void findMediaByExternalIdShouldReturnNull() {
-        String externalId = "123456";
-        String wrongExternalId = "345234";
-
-        Media media = new Media(externalId);
-
-        mediaRepository.save(media);
-        Optional<Media> expect = mediaRepository.findByExternalId(wrongExternalId);
-        assertTrue(expect.isEmpty());
-    }
 
 }

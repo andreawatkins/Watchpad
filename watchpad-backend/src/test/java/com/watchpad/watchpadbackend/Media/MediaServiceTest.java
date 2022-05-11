@@ -39,7 +39,7 @@ public class MediaServiceTest {
 
     @Test
     void registerMedia() {
-        Media media = new Media("123456");
+        Media media = new Media(123456L);
 
         mediaService.registerMedia(media);
         ArgumentCaptor<Media> mediaArgumentCaptor = ArgumentCaptor.forClass(Media.class);
@@ -51,7 +51,7 @@ public class MediaServiceTest {
 
     @Test
     void mediaCantBeRegisteredBecauseMediaExists() {
-        Media media = new Media("345678");
+        Media media = new Media(123444L);
         when(mediaRepository.findMediaByIdOrExternalId(media.getId(), media.getExternalId())).thenReturn(Optional.of(media));
 
         mediaService.registerMedia(media);
@@ -64,7 +64,7 @@ public class MediaServiceTest {
 
     @Test
     void mediaCantBeAddedBecauseOfIllegalArgumentException() {
-        Media media = new Media("234123");
+        Media media = new Media(123336L);
         IllegalArgumentException ex = new IllegalArgumentException("error");
 
         when(mediaRepository.save(media)).thenThrow(ex);
