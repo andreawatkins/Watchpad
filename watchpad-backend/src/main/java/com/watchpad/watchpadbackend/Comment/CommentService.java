@@ -1,3 +1,4 @@
+
 package com.watchpad.watchpadbackend.Comment;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,39 +30,19 @@ public class CommentService {
         this.commentRepo = commentRepository; 
     }
 
-    public Comment addComment(CommentDto commentDto, User user){
-        Comment comment = new Comment(); 
-        Media media = mediaRepo.getById(commentDto.getMediaId()); 
-        comment.setContent(commentDto.getContent()); 
-        comment.setUser(user);
-        comment.setComment_timestamp(LocalDateTime.now());
-        comment.setSpoiler(commentDto.getSpoiler()); 
-        comment.setMedia(media); 
+    public ResponseEntity addComment(Comment comment){
+        
+         commentRepo.save(comment); 
 
-        return commentRepo.save(comment); 
+         return new ResponseEntity("Comment created!", HttpStatus.CREATED);
+       
+
+
     }
 
     public ResponseEntity<List<Comment>> getAllComments() {
         return new ResponseEntity<>(commentRepo.findAll(), HttpStatus.OK);
     }
-
-   /*  public ResponseEntity<Comment> getCommentByMediaId(String mediaId){
-        Optional<Comment> commentOptional = commentRepo.findByMediaId(mediaId);
-        if(commentOptional.isEmpty()){
-            throw new IllegalStateException("No comments on that media!");
-        }
-
-        return new ResponseEntity<>(commentOptional.get(), HttpStatus.OK);
-    } */
-
-       public ResponseEntity<Comment> getCommentByCommentId(Long comment_id){
-        Optional<Comment> commentOptional = commentRepo.findByCommentId(comment_id);
-        if(commentOptional.isEmpty()){
-            throw new IllegalStateException("No comment with that id!");
-        }
-
-        return new ResponseEntity<>(commentOptional.get(), HttpStatus.OK);
-    } 
    
-
 }
+
