@@ -14,6 +14,8 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
    // @Query("SELECT c FROM Comment c WHERE c.media_id = ?1")
     //Optional<Comment> findByMediaId(Long id);
 
+    @Query("SELECT c FROM Comment c WHERE c.comment_id = ?1")
+    Optional<Comment> findByCommentId(Long id);
    
 
 }

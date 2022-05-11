@@ -53,6 +53,15 @@ public class CommentService {
 
         return new ResponseEntity<>(commentOptional.get(), HttpStatus.OK);
     } */
+
+       public ResponseEntity<Comment> getCommentByCommentId(Long comment_id){
+        Optional<Comment> commentOptional = commentRepo.findByCommentId(comment_id);
+        if(commentOptional.isEmpty()){
+            throw new IllegalStateException("No comment with that id!");
+        }
+
+        return new ResponseEntity<>(commentOptional.get(), HttpStatus.OK);
+    } 
    
-    
+
 }
