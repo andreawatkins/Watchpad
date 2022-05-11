@@ -43,5 +43,10 @@ public CommentController(CommentService commentService) {
         return commentService.getCommentByMediaId(mediaId);
     } */
 
+       @GetMapping("/get-comments-by-id{commentId}")
+    public ResponseEntity<Comment> getCommentByCommentId(@PathVariable("commentId") Long comment_Id){
+        return commentService.getCommentByCommentId(comment_Id);
+    } 
+
 
 }
