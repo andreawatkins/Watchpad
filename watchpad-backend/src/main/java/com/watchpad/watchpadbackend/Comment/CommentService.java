@@ -31,7 +31,11 @@ public class CommentService {
     }
 
     public ResponseEntity addComment(Comment comment){
-        
+        Optional<Media> optionalMedia = mediaRepo.findById(comment.getMedia().getId());
+        if(!optionalMedia.isPresent()){
+            Media m = new Media(comment.getMedia().getId());
+            mediaRepo.save(m);
+        }
          commentRepo.save(comment); 
 
          return new ResponseEntity("Comment created!", HttpStatus.CREATED);
@@ -43,6 +47,8 @@ public class CommentService {
     public ResponseEntity<List<Comment>> getAllComments() {
         return new ResponseEntity<>(commentRepo.findAll(), HttpStatus.OK);
     }
+
+   
    
 }
 
