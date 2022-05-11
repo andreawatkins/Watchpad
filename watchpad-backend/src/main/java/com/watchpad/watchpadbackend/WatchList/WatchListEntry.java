@@ -37,10 +37,13 @@ public class WatchListEntry {
 
     }
 
-
+    @Override
     public String toString() {
-        return media.toString() + " " + timestamp.toString();
+        return "WatchList{" +
+                "id=" + id +
+                ", user='" + user + '\'' +
+                ", media='" + media + '\'' +
+                ", timestamp='" + timestamp + '\'' +
+                '}';
     }
-
-
 }
