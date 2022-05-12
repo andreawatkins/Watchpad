@@ -31,7 +31,7 @@ public class Comment {
    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long comment_id;
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "media_id")
     private Media media; 
     @ManyToOne
     private User user; 

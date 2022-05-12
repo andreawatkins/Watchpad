@@ -3,7 +3,7 @@ package com.watchpad.watchpadbackend.Rating;
 import javax.persistence.*;
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class RatableEntity {
 
     @Id

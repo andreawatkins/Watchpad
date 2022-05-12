@@ -1,7 +1,9 @@
 package com.watchpad.watchpadbackend.Comment;
 
 import java.util.List;
+import java.util.Optional;
 
+import com.watchpad.watchpadbackend.Media.Media;
 import com.watchpad.watchpadbackend.User.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController()
@@ -38,8 +41,8 @@ public ResponseEntity<Comment> createComment(@RequestBody Comment comment){
     }
 
    @GetMapping("/get-comments-by-media")
-    public ResponseEntity<List<Comment>> getCommentByMediaId(@Param("id") Long id){
-        return commentService.getCommentsByMediaId(id);
+    public ResponseEntity <Optional<List<Comment>>> getCommentByMedia(@RequestBody Media media) {
+        return commentService.getCommentsByMedia(media);
     } 
 
 
