@@ -16,7 +16,7 @@ public class WatchListEntry {
     private Media media;
     private LocalDateTime timestamp;
 
-    @OneToOne
+    @ManyToOne
     private User user;
 
     public WatchListEntry(User user, Media media) {
