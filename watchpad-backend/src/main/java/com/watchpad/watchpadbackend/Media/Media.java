@@ -13,8 +13,7 @@ import java.util.List;
 public class Media extends RatableEntity {
 
     private String externalId;
-    @OneToMany
-    private List<Comment> comments;
+    
 
     public Media(Long externalId){
         super();
@@ -39,8 +38,7 @@ public class Media extends RatableEntity {
     public String toString() {
         return "Media{" +
                 "Id='" + super.getId() + '\'' +
-                "externalId='" + externalId + '\'' +
-                ", comments=" + comments +
+                "externalId='" + externalId +
                 '}';
     }
 
