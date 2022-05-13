@@ -1,5 +1,6 @@
 package com.watchpad.watchpadbackend.Media;
 
+import com.watchpad.watchpadbackend.User.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,7 +20,6 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class MediaServiceTest {
-
 
     @Mock
     private MediaRepository mediaRepository;
@@ -42,24 +42,21 @@ public class MediaServiceTest {
         Media media = new Media(123456L);
 
         mediaService.registerMedia(media);
-        ArgumentCaptor<Media> mediaArgumentCaptor = ArgumentCaptor.forClass(Media.class);
-        Mockito.verify(mediaRepository).save(mediaArgumentCaptor.capture());
+        ArgumentCaptor<Media> userArgumentCaptor = ArgumentCaptor.forClass(Media.class);
+        Mockito.verify(mediaRepository).save(userArgumentCaptor.capture());
 
-        Media capturedMedia = mediaArgumentCaptor.getValue();
+        Media capturedMedia = userArgumentCaptor.getValue();
         assertEquals(capturedMedia, media);
     }
 
     @Test
     void mediaCantBeRegisteredBecauseMediaExists() {
-        Media media = new Media(123444L);
-        when(mediaRepository.findMediaByIdOrExternalId(media.getId(), media.getExternalId())).thenReturn(Optional.of(media));
+        Media media = new Media(123456L);
+        when(mediaRepository.findById(media.getId())).thenReturn(Optional.of(media));
 
-        mediaService.registerMedia(media);
-
-        ResponseEntity<String> resultOnAddExistingMedia = mediaService.registerMedia(media);
-        ResponseEntity<String> expected = new ResponseEntity("Media already exists with externalId!", HttpStatus.CONFLICT);
-
-        assertEquals(resultOnAddExistingMedia, expected);
+        ResponseEntity<String> result = mediaService.registerMedia(media);
+        ResponseEntity<String> expected = new ResponseEntity("Media already exists with id!", HttpStatus.CONFLICT);
+        assertEquals(result, expected);
     }
 
     @Test

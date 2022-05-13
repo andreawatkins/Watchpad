@@ -1,5 +1,6 @@
 package com.watchpad.watchpadbackend.Media;
 
+import com.watchpad.watchpadbackend.Comment.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,15 +19,12 @@ public class MediaService {
         this.mediaRepository = mediaRepository;
     }
 
-
     public ResponseEntity<String> registerMedia(Media media) {
         try{
-            Optional<Media> mediaOptional = mediaRepository.findMediaByIdOrExternalId(media.getId(), media.getExternalId());
+            Optional<Media> mediaOptional = mediaRepository.findById(media.getId());
             if (mediaOptional.isPresent()) {
-                return new ResponseEntity("Media already exists with externalId!", HttpStatus.CONFLICT);
+                return new ResponseEntity("Media already exists with id!", HttpStatus.CONFLICT);
             }
-
-            media.setExternalId(media.getId().toString());
             mediaRepository.save(media);
             return new ResponseEntity("Media registered!", HttpStatus.CREATED);
 
@@ -36,22 +34,14 @@ public class MediaService {
     }
 
     public ResponseEntity<List<Media>> getAllMedia() {
-        return new ResponseEntity<>(mediaRepository.findAll(), HttpStatus.OK);
+        return new ResponseEntity(mediaRepository.findAll(), HttpStatus.OK);
     }
 
-    public ResponseEntity<Media> getMediaByExternalId(String externalId) {
-        Optional<Media> mediaOptional = mediaRepository.findByExternalId(externalId);
-        if (mediaOptional.isEmpty()) {
-            throw new IllegalStateException("No media exists with external id!");
-        }
-        return new ResponseEntity<>(mediaOptional.get(), HttpStatus.OK);
-    }
-
-    public ResponseEntity<Media> getMediaById(Long id) {
+    public ResponseEntity<Optional<Media>> getMediaById(Long id) {
         Optional<Media> mediaOptional = mediaRepository.findById(id);
         if (mediaOptional.isEmpty()) {
             throw new IllegalStateException("No media exists with id!");
         }
-        return new ResponseEntity<>(mediaOptional.get(), HttpStatus.OK);
+        return new ResponseEntity(mediaOptional.get(), HttpStatus.OK);
     }
 }

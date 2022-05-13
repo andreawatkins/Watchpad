@@ -1,14 +1,13 @@
 package com.watchpad.watchpadbackend.MediaRating;
 
-import com.watchpad.watchpadbackend.Media.Media;
 import com.watchpad.watchpadbackend.Rating.Rating;
-import com.watchpad.watchpadbackend.Rating.RatingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path="api/media-rating")
@@ -25,35 +24,34 @@ public class MediaRatingController {
     public ResponseEntity<List<Rating>> getRatings(){
         return mediaRatingService.getAllRatings();
     }
-//
-//    @GetMapping("/get-user-ratings")
-//    public ResponseEntity<List<Rating>> getRatingsByUserId(@PathVariable("userId") Long userId){
-//        return mediaRatingService.getRatingsByUserId(userId);
-//    }
-//
-//    @GetMapping("/get-entity-ratings")
-//    public ResponseEntity<List<Rating>> getRatingsByMediaId(@PathVariable("entityId") Long entityId){
-//        return mediaRatingService.getRatingsByRatableEntityId(entityId);
-//    }
 
-    @PostMapping("/save-rating")
-    public ResponseEntity<String> saveNewRating(@RequestBody MediaRating mediaRating)  {
-        return mediaRatingService.saveNewMediaRating(mediaRating);
+    @GetMapping("/get-ratings-for-user")
+    public ResponseEntity<Optional<List<Rating>>> getRatingsByUserId(@Param("userId") Long userId){
+        return mediaRatingService.getRatingsByUserId(userId);
     }
 
+    @GetMapping("/get-ratings-for-entity")
+    public ResponseEntity<Optional<List<Rating>>> getRatingsByMediaId(@Param("entityId") Long entityId){
+        return mediaRatingService.getRatingsByRatableEntityId(entityId);
+    }
 
-//    @DeleteMapping
+    @PostMapping("/save-rating")
+    public ResponseEntity<String> saveNewRating(@Param("userId") Long userId,
+                                                @Param("mediaId") Long mediaId,
+                                                @Param("isLiked") boolean isLiked) {
+        return mediaRatingService.saveNewMediaRating(userId, mediaId, isLiked);
+    }
+//
+//
+//    @DeleteMapping("/delete-rating")
 //    public void deleteRating(@Param("userId") Long userId,
-//                             @Param("ratableEntityId") Long ratableEntityId) {
+//                             @Param("mediaId") Long ratableEntityId) {
 //        mediaRatingService.deleteRating(userId, ratableEntityId);
 //    }
 //
-//    @PutMapping
-//    public void updateRating(@Param("userId") Long userId,
-//                             @Param("ratableEntityId") Long ratableEntityId,
-//                             @Param("rating") boolean rating) {
-//        mediaRatingService.updateRating(userId, ratableEntityId, rating);
+//    @PutMapping("/update-rating")
+//    public void updateRating(@RequestBody MediaRating mediaRating) {
+//        mediaRatingService.updateRating(mediaRating);
 //    }
-
 
 }
