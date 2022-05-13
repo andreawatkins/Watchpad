@@ -1,28 +1,30 @@
 package com.watchpad.watchpadbackend.Rating;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.watchpad.watchpadbackend.User.User;
 
 import javax.persistence.*;
 
-
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Rating {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @EmbeddedId
+    RatingKey id = new RatingKey();
 
     @ManyToOne
-    private User user;
+    @MapsId("userId")
+    @JoinColumn(name = "user_id")
+    @JsonBackReference
+    User user;
 
-    @ManyToOne
-    private RatableEntity ratableEntity;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @MapsId("ratableEntityId")
+    @JoinColumn(name = "ratableEntity_id")
+    RatableEntity ratableEntity;
 
     private boolean isLiked;
 
-
     public Rating() {
-
     }
 
     public Rating(User user, RatableEntity ratableEntity, boolean isLiked) {
@@ -31,20 +33,12 @@ public abstract class Rating {
         this.isLiked = isLiked;
     }
 
-    public Long getId() {
-        return id;
-    }
-
     public User getUser() {
         return user;
     }
 
     public RatableEntity getRatableEntity() {
         return ratableEntity;
-    }
-
-    public void setId(Long newId){
-        this.id = newId;
     }
 
     public boolean getIsLiked() {
@@ -61,7 +55,7 @@ public abstract class Rating {
                 "id=" + id +
                 ", user=" + user +
                 ", ratableEntity=" + ratableEntity +
-                ", rating=" + isLiked +
+                ", isLiked=" + isLiked +
                 '}';
     }
 }

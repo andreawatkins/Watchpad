@@ -9,11 +9,13 @@ import java.util.Optional;
 
 @NoRepositoryBean
 public interface RatingRepository extends JpaRepository<Rating, Long> {
-//
-//    @Query("SELECT r FROM Rating r WHERE r.id = ?1")
-//    Optional<Rating> findByRatingId(Long id);
 
-    @Query("SELECT r FROM Rating r WHERE r.user.id = ?1")
-    List<Rating> findAllByUserId(Long userId);
+    @Query("SELECT r FROM Rating r WHERE r.id.userId = ?1")
+    Optional<List<Rating>> findAllByUserId(Long userId);
 
+    @Query("SELECT r FROM Rating r WHERE r.id.ratableEntityId = ?1")
+    Optional<List<Rating>> findAllByRatableEntityId(Long ratableEntityId);
+
+    @Query("SELECT r FROM Rating r WHERE r.id.userId = ?1 AND r.id.ratableEntityId = ?2")
+    Optional<Rating> findByUserIdAndRatableEntityId  (Long userId, Long ratableEntityId);
 }

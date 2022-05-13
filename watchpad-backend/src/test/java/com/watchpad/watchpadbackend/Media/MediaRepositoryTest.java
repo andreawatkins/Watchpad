@@ -27,31 +27,7 @@ public class MediaRepositoryTest {
         Media media = new Media(123123L);
         mediaRepository.save(media);
 
-        Optional<Media> expect = mediaRepository.findMediaByIdOrExternalId(media.getId(),"123123");
-        assertTrue(expect.isPresent());
-    }
-
-    @Test
-    void findMediaByExternalId() {
-        Long externalId = 111111L;
-        Media media = new Media(externalId);
-        media.setExternalId(externalId.toString());
-
-        mediaRepository.save(media);
-        System.out.println(mediaRepository.findAll());
-
-        Optional<Media> expect = mediaRepository.findByExternalId(externalId.toString());
-        assertTrue(expect.isPresent());
-    }
-
-    @Test
-    void findMediaByIdOrExternalId() {
-        Long externalId = 456234L;
-        Media media = new Media(externalId);
-        media.setExternalId(externalId.toString());
-
-        mediaRepository.save(media);
-        Optional<Media> expect = mediaRepository.findMediaByIdOrExternalId(media.getId(), "456234");
+        Optional<Media> expect = mediaRepository.findById(123123L);
         assertTrue(expect.isPresent());
     }
 
@@ -60,11 +36,9 @@ public class MediaRepositoryTest {
         Media media = new Media(565656L);
         mediaRepository.save(media);
 
-        Media otherMedia = new Media();
+        Media otherMedia = new Media(121212L);
 
-        Optional<Media> expect = mediaRepository.findMediaByIdOrExternalId(otherMedia.getId(),otherMedia.getExternalId());
+        Optional<Media> expect = mediaRepository.findById(otherMedia.getId());
         assertTrue(expect.isEmpty());
     }
-
-
 }

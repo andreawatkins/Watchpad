@@ -29,54 +29,35 @@ public class MediaRatingService extends RatingService {
         this.userRepository = userRepository;
     }
 
-
-
-    public ResponseEntity<List<Rating>> getMediaRatingsByMediaId(String mediaExternalId) {
-        return new ResponseEntity<>(mediaRatingRepository.findAllByMediaExternalId(mediaExternalId), HttpStatus.OK);
-    }
-
-
-    public ResponseEntity<String> saveNewMediaRating(MediaRating mediaRating){
+    public ResponseEntity<String> saveNewMediaRating(Long userId, Long mediaId, boolean isLiked){
         try {
 
             //if rating already exists for Media by User, return conflict
-            Optional<Rating> ratingOptional = mediaRatingRepository.findRatingByUserAndMediaId(mediaRating.getUser().getId(), mediaRating.getMedia().getId());
+            Optional<Rating> ratingOptional = mediaRatingRepository.findByUserIdAndRatableEntityId(userId, mediaId);
             if (ratingOptional.isPresent()) {
-                return new ResponseEntity("Media Rating already exists by user for Media!", HttpStatus.CONFLICT);
+                return new ResponseEntity("Rating already exists by user for this media!", HttpStatus.CONFLICT);
             }
 
+            //If media not in media repo, save new media
+            Optional<Media> mediaOptional = mediaRepository.findById(mediaId);
+            if(!mediaOptional.isPresent()){
+                Media media = new Media(mediaId);
+                mediaRepository.save(media);
+            }
 
-//            //If a media record does not exist yet, save Media
-//            Media media;
-//            Optional<Media> mediaOptional = mediaRepository.findByExternalId(mediaExternalId);
-//            if(!mediaOptional.isPresent()){
-//                media = new Media(mediaExternalId);
-//                mediaRepository.save(media);
-//            } else {
-//                media = mediaOptional.get();
-//            }
-////            System.out.println();
-////            System.out.println();
-////            System.out.println(media);
-////            System.out.println();
-////            System.out.println();
-////
-////            //If user does not exist in database, return conflict
-////            Optional<User> userOptional = userRepository.findById(userId);
-////
-////            if(!userOptional.isPresent()){
-////                return new ResponseEntity("Could not find user id, Media Rating not saved!", HttpStatus.CONFLICT);
-////            }
+            //If user does not exist in user repo, return conflict
+            Optional<User> userOptional = userRepository.findById(userId);
+            if(!userOptional.isPresent()){
+                return new ResponseEntity("Could not find user, media rating not saved!", HttpStatus.CONFLICT);
+            }
 
+            MediaRating newMediaRating = new MediaRating(userOptional.get(),mediaOptional.get(),isLiked);
+            mediaRatingRepository.save(newMediaRating);
 
-            mediaRatingRepository.save(mediaRating);
-            return new ResponseEntity("Media Rating registered!", HttpStatus.CREATED);
+            return new ResponseEntity("Media rating registered!", HttpStatus.CREATED);
 
         } catch (IllegalArgumentException e) {
             return new ResponseEntity(e.toString(), HttpStatus.BAD_REQUEST);
         }
-
     }
-
-
 }
