@@ -1,5 +1,6 @@
 package com.watchpad.watchpadbackend.WatchList;
 
+import com.watchpad.watchpadbackend.Media.Media;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -46,8 +47,8 @@ public class WatchListService {
         }
     }
 
-    public ResponseEntity<List<WatchListEntry>> getWatchList() {
-        return new ResponseEntity(watchListRepository.findAll(), HttpStatus.OK);
+    public ResponseEntity<Optional<List<WatchListEntry>>> getWatchList(Media media) {
+        return new ResponseEntity(watchListRepository.findByMedia(media), HttpStatus.OK);
     }
 
 }
