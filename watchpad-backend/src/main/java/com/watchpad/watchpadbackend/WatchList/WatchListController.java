@@ -1,10 +1,12 @@
 package com.watchpad.watchpadbackend.WatchList;
 
+import com.watchpad.watchpadbackend.Media.Media;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/watchlist")
@@ -30,9 +32,9 @@ public class WatchListController {
     //send response entity instead of void
 
     @GetMapping("/get-watchlist")
-    public ResponseEntity<List<WatchListEntry>> getWatchList() {
+    public ResponseEntity<Optional<List<WatchListEntry>>> getWatchList(@RequestBody Media media) {
 
-        return watchListService.getWatchList();
+        return watchListService.getWatchList(media);
     }
 
 }
