@@ -39,7 +39,8 @@ public class MediaRatingRepositoryTest {
         Media media = new Media(184029L);
         mediaRepository.save(media);
 
-        Rating rating = new MediaRating(user, media,true);
+        Rating rating = new MediaRating(user,true);
+        rating.setRatableEntity(media);
         mediaRatingRepository.save(rating);
 
         Optional<Rating> expect = mediaRatingRepository.findByUserIdAndRatableEntityId(user.getId(), media.getId());
@@ -56,13 +57,15 @@ public class MediaRatingRepositoryTest {
         Media media = new Media(123123L);
         mediaRepository.save(media);
 
-        Rating rating = new MediaRating(user, media,true);
+        Rating rating = new MediaRating(user,true);
+        rating.setRatableEntity(media);
         mediaRatingRepository.save(rating);
 
         Media media2 = new Media(444444L);
         mediaRepository.save(media2);
 
-        Rating rating2 = new MediaRating(user, media2,false);
+        Rating rating2 = new MediaRating(user,true);
+        rating2.setRatableEntity(media2);
         mediaRatingRepository.save(rating2);
 
         Optional<List<Rating>> expect = mediaRatingRepository.findAllByUserId(user.getId());
@@ -81,10 +84,12 @@ public class MediaRatingRepositoryTest {
         Media media = new Media(111111L);
         mediaRepository.save(media);
 
-        Rating rating = new MediaRating(user, media,true);
+        Rating rating = new MediaRating(user,true);
+        rating.setRatableEntity(media);
         mediaRatingRepository.save(rating);
 
-        Rating rating2 = new MediaRating(user2, media,false);
+        Rating rating2 = new MediaRating(user2,true);
+        rating2.setRatableEntity(media);
         mediaRatingRepository.save(rating2);
 
         Optional<List<Rating>> expect = mediaRatingRepository.findAllByRatableEntityId(media.getId());

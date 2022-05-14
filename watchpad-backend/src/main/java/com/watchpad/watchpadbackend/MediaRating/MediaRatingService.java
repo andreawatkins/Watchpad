@@ -32,10 +32,29 @@ public class MediaRatingService extends RatingService {
     public ResponseEntity<String> saveNewMediaRating(Long userId, Long mediaId, boolean isLiked){
         try {
 
-            //if rating already exists for Media by User, return conflict
+            System.out.println();
+            System.out.println();
+            System.out.println();
+            System.out.println();
+            System.out.println();
+            System.out.println();
+            System.out.println("userId " + userId);
+            System.out.println("mediaId " + mediaId);
+            System.out.println("isLiked " + isLiked);
+
+
+
+            //if rating already exists for Media by User, update isLiked
             Optional<Rating> ratingOptional = mediaRatingRepository.findByUserIdAndRatableEntityId(userId, mediaId);
             if (ratingOptional.isPresent()) {
-                return new ResponseEntity("Rating already exists by user for this media!", HttpStatus.CONFLICT);
+
+                if(ratingOptional.get().getIsLiked() == isLiked){
+                    return new ResponseEntity("Existing rating is already saved for user!", HttpStatus.CONFLICT);
+                } else {
+
+                    ratingOptional.get().setIsLiked(isLiked);
+                    return new ResponseEntity("Existing rating NOT UPDATED- BROKEN with new value!", HttpStatus.CREATED);
+                }
             }
 
             //If media not in media repo, save new media
@@ -45,13 +64,16 @@ public class MediaRatingService extends RatingService {
                 mediaRepository.save(media);
             }
 
+            mediaOptional = mediaRepository.findById(mediaId);
+
             //If user does not exist in user repo, return conflict
             Optional<User> userOptional = userRepository.findById(userId);
             if(!userOptional.isPresent()){
                 return new ResponseEntity("Could not find user, media rating not saved!", HttpStatus.CONFLICT);
             }
 
-            MediaRating newMediaRating = new MediaRating(userOptional.get(),mediaOptional.get(),isLiked);
+            MediaRating newMediaRating = new MediaRating(userOptional.get(),isLiked);
+            newMediaRating.setRatableEntity(mediaOptional.get());
             mediaRatingRepository.save(newMediaRating);
 
             return new ResponseEntity("Media rating registered!", HttpStatus.CREATED);
@@ -59,5 +81,10 @@ public class MediaRatingService extends RatingService {
         } catch (IllegalArgumentException e) {
             return new ResponseEntity(e.toString(), HttpStatus.BAD_REQUEST);
         }
+    }
+
+    public void deleteRating(Long userId, Long ratableEntityId) {
+
+
     }
 }

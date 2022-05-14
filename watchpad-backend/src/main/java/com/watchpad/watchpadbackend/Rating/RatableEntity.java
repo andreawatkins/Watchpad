@@ -3,6 +3,7 @@ package com.watchpad.watchpadbackend.Rating;
 import com.watchpad.watchpadbackend.User.User;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -12,16 +13,20 @@ public abstract class RatableEntity {
     @Id
     private Long id;
 
-    @ManyToMany
-    Set<User> ratedBy;
+    @ManyToMany(fetch = FetchType.LAZY)
+    Set<User> ratedBy = new HashSet<>();
 
-    @OneToMany(mappedBy = "ratableEntity")
-    Set<Rating> ratings;
+    @OneToMany(mappedBy = "ratableEntity", fetch = FetchType.LAZY)
+    Set<Rating> ratings = new HashSet<>();
 
     public RatableEntity() {
 
     }
 
+    public void addRating(Rating rating){
+        ratings.add(rating);
+        rating.setRatableEntity(this);
+    }
     public RatableEntity(Long id) {
         this.id = id;
     }
