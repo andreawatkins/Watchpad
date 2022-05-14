@@ -14,8 +14,8 @@ public class MediaRating extends Rating {
 
     }
 
-    public MediaRating(User user, Media media, boolean isLiked) {
-        super(user, media, isLiked);
+    public MediaRating(User user, boolean isLiked) {
+        super(user, isLiked);
     }
 
 }

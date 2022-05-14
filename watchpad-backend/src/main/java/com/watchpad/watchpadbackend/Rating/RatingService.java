@@ -25,21 +25,5 @@ public abstract class RatingService {
         return new ResponseEntity<>(ratingRepository.findAllByRatableEntityId(ratableEntityId), HttpStatus.OK);
     }
 
-    public ResponseEntity<String> updateRating(Rating rating) {
-        try {
-            Optional<Rating> ratingOptional = ratingRepository.findByUserIdAndRatableEntityId(rating.getUser().getId(), rating.getRatableEntity().getId());
-            if (ratingOptional.isPresent()) {
-                Rating ratingToUpdate = ratingOptional.get();
-                ratingToUpdate.setIsLiked(rating.getIsLiked());
-                return new ResponseEntity("Rating updated!", HttpStatus.OK);
-
-            } else {
-                return new ResponseEntity("No rating found by user for media!", HttpStatus.NOT_FOUND);
-            }
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity(e.toString(), HttpStatus.BAD_REQUEST);
-        }
-
-    }
 
 }

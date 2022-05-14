@@ -17,7 +17,7 @@ public abstract class Rating {
     @JsonBackReference
     User user;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
     @MapsId("ratableEntityId")
     @JoinColumn(name = "ratableEntity_id")
     RatableEntity ratableEntity;
@@ -27,10 +27,13 @@ public abstract class Rating {
     public Rating() {
     }
 
-    public Rating(User user, RatableEntity ratableEntity, boolean isLiked) {
+    public Rating(User user, boolean isLiked) {
         this.user = user;
-        this.ratableEntity = ratableEntity;
         this.isLiked = isLiked;
+    }
+
+    public void setRatableEntity(RatableEntity ratableEntity) {
+        this.ratableEntity = ratableEntity;
     }
 
     public User getUser() {
@@ -58,4 +61,6 @@ public abstract class Rating {
                 ", isLiked=" + isLiked +
                 '}';
     }
+
+
 }

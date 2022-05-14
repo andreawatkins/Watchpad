@@ -29,6 +29,16 @@ public class MediaRatingController {
     public ResponseEntity<Optional<List<Rating>>> getRatingsByUserId(@Param("userId") Long userId){
         return mediaRatingService.getRatingsByUserId(userId);
     }
+//
+//    @GetMapping("/count-likes")
+//    public ResponseEntity<Optional<Long>> countLikesByMediaId(@Param("mediaId") Long entityId){
+//        return mediaRatingService.countLikesByRatableEntityId(entityId);
+//    }
+//
+//    @GetMapping("/count-dislikes")
+//    public ResponseEntity<Optional<Long>> countDisLikesByMediaId(@Param("mediaId") Long entityId){
+//        return mediaRatingService.countDislikesByRatableEntityId(entityId);
+//    }
 
     @GetMapping("/get-ratings-for-entity")
     public ResponseEntity<Optional<List<Rating>>> getRatingsByMediaId(@Param("entityId") Long entityId){
@@ -41,17 +51,13 @@ public class MediaRatingController {
                                                 @Param("isLiked") boolean isLiked) {
         return mediaRatingService.saveNewMediaRating(userId, mediaId, isLiked);
     }
-//
-//
-//    @DeleteMapping("/delete-rating")
-//    public void deleteRating(@Param("userId") Long userId,
-//                             @Param("mediaId") Long ratableEntityId) {
-//        mediaRatingService.deleteRating(userId, ratableEntityId);
-//    }
-//
-//    @PutMapping("/update-rating")
-//    public void updateRating(@RequestBody MediaRating mediaRating) {
-//        mediaRatingService.updateRating(mediaRating);
-//    }
+
+
+    @DeleteMapping("/delete-rating")
+    public void deleteRating(@Param("userId") Long userId,
+                             @Param("mediaId") Long ratableEntityId) {
+        mediaRatingService.deleteRating(userId, ratableEntityId);
+    }
+
 
 }
