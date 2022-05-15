@@ -1,6 +1,7 @@
 package com.watchpad.watchpadbackend.WatchList;
 
 import com.watchpad.watchpadbackend.Media.Media;
+import com.watchpad.watchpadbackend.User.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ public class WatchListController {
     }
 
     @PostMapping("/add-to-watchlist")
-    public ResponseEntity<String> addToWatchList(@RequestBody WatchListEntry watchListEntry) {
+    public ResponseEntity<WatchListEntry> addToWatchList(@RequestBody WatchListEntry watchListEntry) {
         return watchListService.addToWatchList(watchListEntry);
     }
     //return response entity instead of void.
@@ -31,10 +32,10 @@ public class WatchListController {
     }
     //send response entity instead of void
 
-    @GetMapping("/get-watchlist")
-    public ResponseEntity<Optional<List<WatchListEntry>>> getWatchList(@RequestBody Media media) {
+    @GetMapping("/get-watchlist/{user}")
+    public ResponseEntity<Optional<List<WatchListEntry>>> getWatchList(@PathVariable User user) {
 
-        return watchListService.getWatchList(media);
+        return watchListService.getWatchList(user);
     }
 
 }

@@ -31,9 +31,6 @@ public class User {
     @JsonManagedReference
     Set<MediaRating> mediaRatings;
 
-    @OneToMany
-    private List<WatchListEntry> watchListEntry;
-
     public User() {
     }
 
@@ -43,12 +40,8 @@ public class User {
         this.email = email;
         this.username = username;
         this.password = password;
-        watchListEntry = new ArrayList<>();
     }
 
-    public void addMediaToWatchList(WatchListEntry media) {
-        watchListEntry.add(media);
-    }
 
     @Override
     public String toString() {
