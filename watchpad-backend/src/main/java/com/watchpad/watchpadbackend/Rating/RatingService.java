@@ -25,5 +25,12 @@ public abstract class RatingService {
         return new ResponseEntity<>(ratingRepository.findAllByRatableEntityId(ratableEntityId), HttpStatus.OK);
     }
 
+    public ResponseEntity<Long> getCountOfLikesByEntityId(Long ratableEntityId) {
+        return new ResponseEntity<>(ratingRepository.getCountOfLikesByEntityId(ratableEntityId), HttpStatus.OK);
+    }
+
+    public ResponseEntity<Long> getCountOfDislikesByEntityId(Long ratableEntityId) {
+        return new ResponseEntity<>(ratingRepository.getCountOfDislikesByEntityId(ratableEntityId), HttpStatus.OK);
+    }
 
 }
