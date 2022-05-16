@@ -7,10 +7,12 @@ import com.watchpad.watchpadbackend.Rating.RatingService;
 import com.watchpad.watchpadbackend.User.User;
 import com.watchpad.watchpadbackend.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,20 +31,13 @@ public class MediaRatingService extends RatingService {
         this.userRepository = userRepository;
     }
 
+    @Transactional
     public ResponseEntity<String> saveNewMediaRating(Long userId, Long mediaId, boolean isLiked){
         try {
 
-            System.out.println();
-            System.out.println();
-            System.out.println();
-            System.out.println();
-            System.out.println();
-            System.out.println();
             System.out.println("userId " + userId);
             System.out.println("mediaId " + mediaId);
             System.out.println("isLiked " + isLiked);
-
-
 
             //if rating already exists for Media by User, update isLiked
             Optional<Rating> ratingOptional = mediaRatingRepository.findByUserIdAndRatableEntityId(userId, mediaId);
@@ -52,8 +47,9 @@ public class MediaRatingService extends RatingService {
                     return new ResponseEntity("Existing rating is already saved for user!", HttpStatus.CONFLICT);
                 } else {
 
-                    ratingOptional.get().setIsLiked(isLiked);
-                    return new ResponseEntity("Existing rating NOT UPDATED- BROKEN with new value!", HttpStatus.CREATED);
+                    mediaRatingRepository.setIsLiked(isLiked,ratingOptional.get().getId());
+
+                    return new ResponseEntity("Existing rating updated with new value!", HttpStatus.CREATED);
                 }
             }
 
@@ -83,8 +79,36 @@ public class MediaRatingService extends RatingService {
         }
     }
 
-    public void deleteRating(Long userId, Long ratableEntityId) {
+    public ResponseEntity<Optional<Rating>> getMediaRating(Long userId, Long mediaId) {
+        try{
+            Optional<Rating> ratingOptional = mediaRatingRepository.findByUserIdAndRatableEntityId(userId, mediaId);
+            if (ratingOptional.isPresent()) {
+                return new ResponseEntity<>(ratingOptional, HttpStatus.OK);
+            } else {
+                return new ResponseEntity("No existing rating found!", HttpStatus.NOT_FOUND);
+            }
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity(e.toString(), HttpStatus.BAD_REQUEST);
+        }
+    }
 
+    @Transactional
+    public ResponseEntity<String> deleteMediaRating(Long userId, Long mediaId) {
+        try{
 
+            //if rating already exists for Media by User, update isLiked
+            Optional<Rating> ratingOptional = mediaRatingRepository.findByUserIdAndRatableEntityId(userId, mediaId);
+            if (ratingOptional.isPresent()) {
+
+                mediaRatingRepository.deleteById(ratingOptional.get().getId());
+
+                return new ResponseEntity("Existing rating deleted!", HttpStatus.CREATED);
+            } else {
+                return new ResponseEntity("No existing rating found!", HttpStatus.NOT_FOUND);
+            }
+
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity(e.toString(), HttpStatus.BAD_REQUEST);
+        }
     }
 }

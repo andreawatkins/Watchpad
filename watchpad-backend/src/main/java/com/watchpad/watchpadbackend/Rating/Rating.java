@@ -52,6 +52,10 @@ public abstract class Rating {
         this.isLiked = rating;
     }
 
+    public RatingKey getId() {
+        return id;
+    }
+
     @Override
     public String toString() {
         return "Rating{" +

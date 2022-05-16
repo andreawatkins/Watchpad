@@ -29,21 +29,28 @@ public class MediaRatingController {
     public ResponseEntity<Optional<List<Rating>>> getRatingsByUserId(@Param("userId") Long userId){
         return mediaRatingService.getRatingsByUserId(userId);
     }
-//
-//    @GetMapping("/count-likes")
-//    public ResponseEntity<Optional<Long>> countLikesByMediaId(@Param("mediaId") Long entityId){
-//        return mediaRatingService.countLikesByRatableEntityId(entityId);
-//    }
-//
-//    @GetMapping("/count-dislikes")
-//    public ResponseEntity<Optional<Long>> countDisLikesByMediaId(@Param("mediaId") Long entityId){
-//        return mediaRatingService.countDislikesByRatableEntityId(entityId);
-//    }
 
-    @GetMapping("/get-ratings-for-entity")
+    @GetMapping("/get-rating")
+    public ResponseEntity<Optional<Rating>> getMediaRating(@Param("userId") Long userId,
+                                                      @Param("mediaId") Long mediaId){
+        return mediaRatingService.getMediaRating(userId, mediaId);
+    }
+
+    @GetMapping("/get-ratings-for-media")
     public ResponseEntity<Optional<List<Rating>>> getRatingsByMediaId(@Param("entityId") Long entityId){
         return mediaRatingService.getRatingsByRatableEntityId(entityId);
     }
+
+    @GetMapping("/count-likes")
+    public ResponseEntity<Long> getCountOfLikesByEntityId(@Param("mediaId") Long mediaId){
+        return mediaRatingService.getCountOfLikesByEntityId(mediaId);
+    }
+
+    @GetMapping("/count-dislikes")
+    public ResponseEntity<Long> getCountOfDislikesByEntityId(@Param("mediaId") Long mediaId){
+        return mediaRatingService.getCountOfDislikesByEntityId(mediaId);
+    }
+
 
     @PostMapping("/save-rating")
     public ResponseEntity<String> saveNewRating(@Param("userId") Long userId,
@@ -52,11 +59,10 @@ public class MediaRatingController {
         return mediaRatingService.saveNewMediaRating(userId, mediaId, isLiked);
     }
 
-
-    @DeleteMapping("/delete-rating")
-    public void deleteRating(@Param("userId") Long userId,
-                             @Param("mediaId") Long ratableEntityId) {
-        mediaRatingService.deleteRating(userId, ratableEntityId);
+    @PostMapping("/delete-rating")
+    public ResponseEntity<String> saveNewRating(@Param("userId") Long userId,
+                                                @Param("mediaId") Long mediaId) {
+        return mediaRatingService.deleteMediaRating(userId, mediaId);
     }
 
 
