@@ -35,7 +35,9 @@ public class Comment {
     private Media media; 
     @ManyToOne
     private User user; 
-    private LocalDateTime comment_timestamp;
+    private String comment_timestamp;
+    @Column(nullable = true)
+    private String duration_timestamp;
     //@OneToOne
     @Column(columnDefinition = "TEXT")
     private String content; 
@@ -43,14 +45,14 @@ public class Comment {
     
     
 
-    public Comment(Long comment_id, Media media, User user, LocalDateTime comment_timestamp
-    , String content, boolean spoiler, int likes, int dislikes ){
+    public Comment(Long comment_id, Media media, User user, String comment_timestamp, String duration_timestamp,
+     String content, boolean spoiler, int likes, int dislikes ){
 
         this.comment_id=comment_id;
         this.media=media;
         this.user=user;
         this.comment_timestamp=comment_timestamp;
-        
+        this.duration_timestamp = duration_timestamp;
         this.content = content;
         this.spoiler = spoiler;
        
