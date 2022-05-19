@@ -15,11 +15,12 @@ public class WatchListEntry {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long watchlist_id;
 
-    @OneToOne
+    @OneToOne()
+    //@JoinColumn(name = "media_id")
     private Media media;
-    private LocalDateTime timestamp;
+    //private LocalDateTime timestamp;
 
-    @OneToOne
+    @OneToOne()
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -27,7 +28,6 @@ public class WatchListEntry {
         this.watchlist_id = watchlist_id;
         this.user = user;
         this.media = media;
-        timestamp = LocalDateTime.now();
     }
 
     public WatchListEntry() {
@@ -41,7 +41,7 @@ public class WatchListEntry {
                 "id=" + watchlist_id +
                 ", user='" + user + '\'' +
                 ", media='" + media + '\'' +
-                ", timestamp='" + timestamp + '\'' +
+               // ", timestamp='" + timestamp + '\'' +
                 '}';
     }
 
