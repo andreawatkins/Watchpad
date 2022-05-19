@@ -48,8 +48,12 @@ public class CommentService {
         return new ResponseEntity<>(commentRepo.findAll(), HttpStatus.OK);
     }
 
-    public ResponseEntity<Optional<List<Comment>>> getCommentsByMedia(Media media) {
-        return new ResponseEntity<>(commentRepo.findByMedia(media), HttpStatus.OK); 
+    public ResponseEntity<Optional<List<Comment>>> getCommentsByMedia(Long mediaId) {
+        Optional<List<Comment>> comments = commentRepo.findByMedia(mediaId);
+        if (comments.isEmpty()) {
+            throw new IllegalStateException("No comment exists for that media!");
+        }
+        return new ResponseEntity(comments, HttpStatus.OK); 
 
     }
 }

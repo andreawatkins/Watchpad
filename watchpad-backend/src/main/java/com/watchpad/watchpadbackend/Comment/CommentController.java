@@ -40,9 +40,9 @@ public ResponseEntity<Comment> createComment(@RequestBody Comment comment){
         return commentService.getAllComments();
     }
 
-   @GetMapping("/get-comments-by-media/{media}")
-    public ResponseEntity <Optional<List<Comment>>> getCommentByMedia(@PathVariable Media media) {
-        return commentService.getCommentsByMedia(media);
+   @GetMapping("/get-comments-by-media")
+    public ResponseEntity <Optional<List<Comment>>> getCommentByMedia(@Param("mediaId") Long mediaId) {
+        return commentService.getCommentsByMedia(mediaId);
     } 
 
 
