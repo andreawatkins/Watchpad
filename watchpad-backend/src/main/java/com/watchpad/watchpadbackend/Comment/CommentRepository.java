@@ -15,11 +15,12 @@ import java.util.Set;
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
   // @Query("SELECT c FROM Comment c WHERE c.media = ?1")
-   // Optional<List<Comment>> findByMedia(Long mediaId);
+  // Optional<List<Comment>> findByMedia(Long mediaId);
 
-   @Query("SELECT c FROM Comment c WHERE c.media.id = ?1")
-    Optional<List<Comment>> findByMedia(Long mediaId);
+  @Query("SELECT c FROM Comment c WHERE c.media.id = ?1")
+  Optional<List<Comment>> findByMedia(Long mediaId);
 
-    
+  @Query("SELECT c FROM Comment c WHERE c.media.id = ?1 AND c.duration_timestamp is not null")
+  Optional<User> findByTimestamp(Long mediaId);
 
 }
