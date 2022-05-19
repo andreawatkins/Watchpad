@@ -1,10 +1,6 @@
 package com.watchpad.watchpadbackend.WatchList;
 
-import com.watchpad.watchpadbackend.Media.Media;
 import com.watchpad.watchpadbackend.Media.MediaRepository;
-import com.watchpad.watchpadbackend.User.User;
-import com.watchpad.watchpadbackend.User.UserRepository;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,20 +35,26 @@ public class WatchListService {
     }
 
     public ResponseEntity<String> removeFromWatchList(WatchListEntry watchListEntry) {
-        try {
             Optional<WatchListEntry> queriedMedia = watchListRepository.findByUserAndMedia(watchListEntry.getUser(), watchListEntry.getMedia());
             if (!queriedMedia.isPresent()) {
                 return new ResponseEntity("Media not in watchlist", HttpStatus.CONFLICT);
             }
-            watchListRepository.deleteAllById(Collections.singleton(queriedMedia.get().getId()));
+            watchListRepository.delete(queriedMedia.get());
             return new ResponseEntity("Media removed from watchlist", HttpStatus.OK);
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity(e.toString(), HttpStatus.BAD_REQUEST);
-        }
+
     }
 
-    public ResponseEntity<Optional<List<WatchListEntry>>> getWatchList(User user) {
-        return new ResponseEntity(watchListRepository.findByUser(user), HttpStatus.OK);
+    public ResponseEntity removeEntry(WatchListEntry watchListEntry) {
+        Optional<WatchListEntry> entry = watchListRepository.findByMediaId(watchListEntry.getMedia().getId());
+        if (!entry.isPresent()) {
+            return new ResponseEntity("Media not in watchlist", HttpStatus.CONFLICT);
+        }
+        watchListRepository.delete(entry.get());
+        return new ResponseEntity("Media removed from watchlist", HttpStatus.OK);
+    }
+
+    public ResponseEntity<Optional<List<WatchListEntry>>> getWatchList(Long userId) {
+        return new ResponseEntity(watchListRepository.findByUserId(userId), HttpStatus.OK);
     }
 
 }
