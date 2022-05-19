@@ -28,25 +28,42 @@ public class FollowService {
         return new ResponseEntity(followRepository.findAll(), HttpStatus.OK);
     }
 
-    public ResponseEntity<Object> getFollowingList(Long follower_id){
-        List<User> userList = new ArrayList<>();
-        List<Long> followeeList = followRepository.getFollowingList(follower_id);
-        for(Long followee_id : followeeList){
-            try {
-                Optional<User> user = userRepository.findById(followee_id);
-                if(user.isPresent()) userList.add(user.get());
-            }
-            catch(IllegalArgumentException ex) {
-                return new ResponseEntity<>("ID must be valid.", HttpStatus.BAD_REQUEST);
-            }
-        }
-        return new ResponseEntity<>(userList, HttpStatus.OK);
+    public ResponseEntity<Object> getFollowingList(String follower_username){
+        Optional<List<User>> followeeList = followRepository.getFollowingList(follower_username);
+        if(followeeList.isEmpty()) return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
+
+        return new ResponseEntity<>(followeeList, HttpStatus.OK);
     }
 
     public ResponseEntity<String> followUser(Follow followData){
+        if(followData.getFollowerUsername() == null || followData.getFolloweeUsername() == null) return new ResponseEntity("Must provide a valid object.", HttpStatus.BAD_REQUEST);
         try {
+            Optional<String> followeeID = followRepository.getFolloweeUsername(followData.getFollowerUsername(), followData.getFolloweeUsername());
+            if(followeeID.isPresent()){
+                return new ResponseEntity(String.format("(%s) is already following (%s)", followData.getFollowerUsername(), followData.getFolloweeUsername()), HttpStatus.CONFLICT);
+            }
             followRepository.save(followData);
-            return new ResponseEntity(String.format("User with ID (%s) is now following User with ID (%s)", followData.getFollower_id(), followData.getFollowee_id()), HttpStatus.OK);
+            return new ResponseEntity(String.format("(%s) is now following (%s)",followData.getFollowerUsername(), followData.getFolloweeUsername()), HttpStatus.OK);
+        }
+        catch(IllegalArgumentException ex){
+            return new ResponseEntity("Must provide a valid object.", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    public ResponseEntity<String> unfollowUser(Follow followData){
+        try {
+            followRepository.deleteByFolloweeUsername(followData.getFollowerUsername(), followData.getFolloweeUsername());
+            return new ResponseEntity(String.format("User with ID (%s) is no longer following User with ID (%s)", followData.getFollowerUsername(), followData.getFolloweeUsername()), HttpStatus.OK);
+        }
+        catch(IllegalArgumentException ex){
+            return new ResponseEntity("Must provide a valid object.", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    public ResponseEntity<Boolean> isFollowingUser(Follow followData){
+        try {
+            if(followRepository.getFolloweeUsername(followData.getFollowerUsername(), followData.getFolloweeUsername()).isEmpty()) return new ResponseEntity(false, HttpStatus.OK);
+            return new ResponseEntity(true, HttpStatus.OK);
         }
         catch(IllegalArgumentException ex){
             return new ResponseEntity("Must provide a valid object.", HttpStatus.BAD_REQUEST);

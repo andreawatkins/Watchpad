@@ -24,13 +24,23 @@ public class FollowController {
         return followService.getAllFollowerInformation();
     }
 
-    @GetMapping("/get-following-list")
+    @PostMapping("/get-following-list")
     public ResponseEntity<Object> getFollowingList(@RequestBody Follow followData){
-        return followService.getFollowingList(followData.getFollower_id());
+        return followService.getFollowingList(followData.getFollowerUsername());
     }
 
     @PostMapping("/follow")
     public ResponseEntity<String> follow(@RequestBody Follow followData){
         return followService.followUser(followData);
+    }
+
+    @PostMapping("/unfollow")
+    public ResponseEntity<String> unfollow(@RequestBody Follow followData){
+        return followService.unfollowUser(followData);
+    }
+
+    @PostMapping("/is-following-user")
+    public ResponseEntity<Boolean> isFollowingUser(@RequestBody Follow followData){
+        return followService.isFollowingUser(followData);
     }
 }

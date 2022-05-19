@@ -16,13 +16,13 @@ public class Follow {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private Long id;
-    private Long follower_id;
-    private Long followee_id;
+    private String followerUsername;
+    private String followeeUsername;
 
     public Follow(){}
 
-    public Follow(Long follower_id, Long followee_id) {
-        this.follower_id = follower_id;
-        this.followee_id = followee_id;
+    public Follow(String followerUsername, String followeeUsername) {
+        this.followerUsername = followerUsername;
+        this.followeeUsername = followeeUsername;
     }
 }
