@@ -22,29 +22,32 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/comments")
 public class CommentController {
 
-@Autowired    
-private final CommentService commentService; 
+    @Autowired
+    private final CommentService commentService;
 
-public CommentController(CommentService commentService) {
-    this.commentService = commentService;
-}
-@PostMapping("")
-public ResponseEntity<Comment> createComment(@RequestBody Comment comment){
-    
-    return commentService.addComment(comment); 
-}
+    public CommentController(CommentService commentService) {
+        this.commentService = commentService;
+    }
 
+    @PostMapping("")
+    public ResponseEntity<Comment> createComment(@RequestBody Comment comment) {
+
+        return commentService.addComment(comment);
+    }
 
     @GetMapping("/get-comments")
-    public ResponseEntity<List<Comment>> getComments(){
+    public ResponseEntity<List<Comment>> getComments() {
         return commentService.getAllComments();
     }
 
-   @GetMapping("/get-comments-by-media")
-    public ResponseEntity <Optional<List<Comment>>> getCommentByMedia(@Param("mediaId") Long mediaId) {
+    @GetMapping("/get-comments-by-media")
+    public ResponseEntity<Optional<List<Comment>>> getCommentByMedia(@Param("mediaId") Long mediaId) {
         return commentService.getCommentsByMedia(mediaId);
-    } 
+    }
 
-
+    @GetMapping("/get")
+    public ResponseEntity<Optional<List<Comment>>> getCommentsWithTime(@Param("mediaId") Long mediaId) {
+        return commentService.getCommentsWithTime(mediaId);
+    }
 
 }
