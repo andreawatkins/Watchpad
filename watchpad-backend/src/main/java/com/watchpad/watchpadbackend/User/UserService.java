@@ -20,6 +20,17 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    public ResponseEntity<Object> getUserInformation(String username) {
+        try {
+            Optional<User> user = userRepository.findByUsername(username);
+            if(user.isEmpty()) return new ResponseEntity<>("User does not exist in our database.", HttpStatus.CONFLICT);
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        }
+        catch(IllegalArgumentException ex){
+            return new ResponseEntity<>("Please provide a valid user ID.", HttpStatus.BAD_REQUEST);
+        }
+    }
+
     public ResponseEntity<List<User>> getAllUsers() {
         return new ResponseEntity(userRepository.findAll(), HttpStatus.OK);
     }

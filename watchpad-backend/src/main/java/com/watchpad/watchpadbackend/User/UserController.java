@@ -1,6 +1,7 @@
 package com.watchpad.watchpadbackend.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +16,11 @@ public class UserController {
 
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    @PostMapping("/get-information")
+    public ResponseEntity<Object> getUserInformation(@RequestBody User user){
+        return userService.getUserInformation(user.getUsername());
     }
 
     @GetMapping("/get-users")

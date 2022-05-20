@@ -1,6 +1,9 @@
 package com.watchpad.watchpadbackend.Follow;
 
+import com.watchpad.watchpadbackend.User.User;
+import com.watchpad.watchpadbackend.User.UserRepository;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -16,37 +19,91 @@ class FollowRepositoryTest {
 
     @Autowired
     private FollowRepository followRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @AfterEach
     void tearDown() {
         followRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     @Test
     void getFollowingList(){
-        Long id_1 = 1L;
-        Long id_2 = 2L;
-        Follow followObject = new Follow(id_1, id_2);
+        User user1 = new User("devin@test.com", "devin", "password");
+        User user2 = new User("test@test.com", "test", "password");
+        String username1 = "devin";
+        String username2 = "test";
+        Follow followObject = new Follow(username1, username2);
 
+        userRepository.save(user1);
+        userRepository.save(user2);
         followRepository.save(followObject);
 
-        List<Long> expected = new ArrayList<>(List.of(id_2));
-        List<Long> actual = followRepository.getFollowingList(id_1);
+        Optional<List<User>> expected = Optional.of(new ArrayList<>(List.of(user2)));
+        Optional<List<User>> actual = followRepository.getFollowingList(username1);
 
-        assertTrue(expected.equals(actual));
+        assertEquals(expected, actual);
     }
 
     @Test
-    void getFollowingListShouldReturnNull(){
-        Long id_1 = 1L;
-        Long id_2 = 2L;
-        Long id_3 = 3L;
-        Follow followObject = new Follow(id_1, id_2);
+    void getFollowingListShouldReturnEmptyArray(){
+        User user1 = new User("devin@test.com", "devin", "password");
+        User user2 = new User("test@test.com", "test", "password");
+
+        String username1 = "devin";
+        String username2 = "test";
+
+        Follow followObject = new Follow(username1, username2);
+
+        userRepository.save(user1);
+        userRepository.save(user2);
+        followRepository.save(followObject);
+
+        Optional<List<User>> actual = followRepository.getFollowingList(username2);
+
+        assertEquals(actual.get(), new ArrayList<>());
+    }
+
+    @Test
+    void getFolloweeUsername() {
+        String username1 = "devin";
+        String username2 = "test";
+        Follow followObject = new Follow(username1, username2);
 
         followRepository.save(followObject);
 
-        List<Long> actual = followRepository.getFollowingList(id_3);
+        Optional<String> expected = Optional.of("test");
+        Optional<String> actual = followRepository.getFolloweeUsername(username1, username2);
 
-        assertTrue(actual.isEmpty());
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void getFolloweeUsernameShouldBeEmpty() {
+        String username1 = "devin";
+        String username2 = "test";
+        String username3 = "randomUsername";
+        Follow followObject = new Follow(username1, username2);
+
+        followRepository.save(followObject);
+
+        Boolean expected = true;
+        Optional<String> actual = followRepository.getFolloweeUsername(username3, username2);
+
+        assertEquals(expected, actual.isEmpty());
+    }
+
+    @Test
+    void deleteByFolloweeUsername() {
+        String username1 = "devin";
+        String username2 = "test";
+        Follow followObject = new Follow(username1, username2);
+
+        followRepository.save(followObject);
+        assertEquals(1, followRepository.count());
+
+        followRepository.deleteByFolloweeUsername(username1, username2);
+        assertEquals(0, followRepository.count());
     }
 }

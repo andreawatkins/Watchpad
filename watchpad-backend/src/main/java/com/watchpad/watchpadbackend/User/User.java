@@ -31,12 +31,12 @@ public class User {
     @JsonManagedReference
     Set<MediaRating> mediaRatings;
 
-
     public User() {
     }
 
-
-
+    public User(String username) {
+        this.username = username;
+    }
     public User(String email, String username, String password) {
         this.email = email;
         this.username = username;

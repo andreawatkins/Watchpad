@@ -58,7 +58,7 @@ class UserRepositoryTest {
     }
 
     @Test
-    void findUserByEmailOrUsernameShouldReturnNull() {
+    void findUserByEmailOrUsernameShouldBeEmpty() {
         String email = "test@gmail.com";
         String username = "username";
         String wrongEmail = "wrongemail@gmail.com";
