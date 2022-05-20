@@ -25,7 +25,7 @@ public class FollowController {
     }
 
     @PostMapping("/get-following-list")
-    public ResponseEntity<Object> getFollowingList(@RequestBody Follow followData){
+    public ResponseEntity<List<User>> getFollowingList(@RequestBody Follow followData){
         return followService.getFollowingList(followData.getFollowerUsername());
     }
 
@@ -40,7 +40,7 @@ public class FollowController {
     }
 
     @PostMapping("/is-following-user")
-    public ResponseEntity<Boolean> isFollowingUser(@RequestBody Follow followData){
+    public ResponseEntity<Object> isFollowingUser(@RequestBody Follow followData){
         return followService.isFollowingUser(followData);
     }
 }
