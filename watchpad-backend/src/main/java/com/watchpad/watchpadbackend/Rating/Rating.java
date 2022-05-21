@@ -22,14 +22,12 @@ public abstract class Rating {
     @JoinColumn(name = "ratableEntity_id")
     RatableEntity ratableEntity;
 
-    private boolean isLiked;
 
     public Rating() {
     }
 
-    public Rating(User user, boolean isLiked) {
+    public Rating(User user) {
         this.user = user;
-        this.isLiked = isLiked;
     }
 
     public void setRatableEntity(RatableEntity ratableEntity) {
@@ -44,14 +42,6 @@ public abstract class Rating {
         return ratableEntity;
     }
 
-    public boolean getIsLiked() {
-        return isLiked;
-    }
-
-    public void setIsLiked(boolean rating) {
-        this.isLiked = rating;
-    }
-
     public RatingKey getId() {
         return id;
     }
@@ -62,7 +52,6 @@ public abstract class Rating {
                 "id=" + id +
                 ", user=" + user +
                 ", ratableEntity=" + ratableEntity +
-                ", isLiked=" + isLiked +
                 '}';
     }
 

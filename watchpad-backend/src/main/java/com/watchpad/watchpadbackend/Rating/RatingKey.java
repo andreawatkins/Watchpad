@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 
 @Embeddable
+public
 class RatingKey implements Serializable {
 
     @Column(name = "user_id")
