@@ -23,10 +23,6 @@ public abstract class RatableEntity {
 
     }
 
-    public void addRating(Rating rating){
-        ratings.add(rating);
-        rating.setRatableEntity(this);
-    }
     public RatableEntity(Long id) {
         this.id = id;
     }

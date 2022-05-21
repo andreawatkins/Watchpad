@@ -26,44 +26,40 @@ public class MediaRatingController {
     }
 
     @GetMapping("/get-ratings-for-user")
-    public ResponseEntity<Optional<List<Rating>>> getRatingsByUserId(@Param("userId") Long userId){
+    public ResponseEntity<Optional<List<MediaRating>>> getRatingsByUserId(@Param("userId") Long userId){
         return mediaRatingService.getRatingsByUserId(userId);
     }
 
-    @GetMapping("/get-rating")
-    public ResponseEntity<Optional<Rating>> getMediaRating(@Param("userId") Long userId,
-                                                      @Param("mediaId") Long mediaId){
-        return mediaRatingService.getMediaRating(userId, mediaId);
-    }
-
     @GetMapping("/get-ratings-for-media")
-    public ResponseEntity<Optional<List<Rating>>> getRatingsByMediaId(@Param("entityId") Long entityId){
-        return mediaRatingService.getRatingsByRatableEntityId(entityId);
+    public ResponseEntity<Optional<List<MediaRating>>> getRatingsByMediaId(@Param("mediaId") Long mediaId){
+        System.out.println();
+        System.out.println("mediaId: " + mediaId);
+        System.out.println();
+        return mediaRatingService.getRatingsByRatableEntityId(mediaId);
     }
 
-    @GetMapping("/count-likes")
-    public ResponseEntity<Long> getCountOfLikesByEntityId(@Param("mediaId") Long mediaId){
-        return mediaRatingService.getCountOfLikesByEntityId(mediaId);
+    @GetMapping("/get-rating")
+    public ResponseEntity<Optional<MediaRating>> getMediaRating(@Param("userId") Long userId,
+                                                                @Param("mediaId") Long mediaId){
+        return mediaRatingService.getRating(userId, mediaId);
     }
 
-    @GetMapping("/count-dislikes")
-    public ResponseEntity<Long> getCountOfDislikesByEntityId(@Param("mediaId") Long mediaId){
-        return mediaRatingService.getCountOfDislikesByEntityId(mediaId);
+    @GetMapping("/get-average-rating-for-media")
+    public ResponseEntity<Optional<Float>> getAverageRatingByMediaId(@Param("mediaId") Long mediaId){
+        return mediaRatingService.getAverageRatingForMedia(mediaId);
     }
-
 
     @PostMapping("/save-rating")
     public ResponseEntity<String> saveNewRating(@Param("userId") Long userId,
                                                 @Param("mediaId") Long mediaId,
-                                                @Param("isLiked") boolean isLiked) {
-        return mediaRatingService.saveNewMediaRating(userId, mediaId, isLiked);
+                                                @Param("rating") Float rating) {
+        return mediaRatingService.saveOrUpdateMediaRating(userId, mediaId, rating);
     }
 
     @PostMapping("/delete-rating")
-    public ResponseEntity<String> saveNewRating(@Param("userId") Long userId,
-                                                @Param("mediaId") Long mediaId) {
-        return mediaRatingService.deleteMediaRating(userId, mediaId);
+    public ResponseEntity<String> deleteRating(@Param("userId") Long userId,
+                                               @Param("mediaId") Long mediaId) {
+        return mediaRatingService.deleteRating(userId, mediaId);
     }
-
 
 }

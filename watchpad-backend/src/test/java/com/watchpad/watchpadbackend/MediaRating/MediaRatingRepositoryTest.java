@@ -2,6 +2,8 @@ package com.watchpad.watchpadbackend.MediaRating;
 
 import com.watchpad.watchpadbackend.Media.Media;
 import com.watchpad.watchpadbackend.Media.MediaRepository;
+import com.watchpad.watchpadbackend.MediaLike.MediaLike;
+import com.watchpad.watchpadbackend.MediaLike.MediaLikeRepository;
 import com.watchpad.watchpadbackend.Rating.Rating;
 import com.watchpad.watchpadbackend.User.User;
 import com.watchpad.watchpadbackend.User.UserRepository;
@@ -18,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @DataJpaTest
 public class MediaRatingRepositoryTest {
     @Autowired
-    private MediaRatingRepository mediaRatingRepository;
+    private MediaLikeRepository mediaLikeRepository;
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -28,7 +30,7 @@ public class MediaRatingRepositoryTest {
     void tearDown() {
         userRepository.deleteAll();
         mediaRepository.deleteAll();
-        mediaRatingRepository.deleteAll();
+        mediaLikeRepository.deleteAll();
     }
 
     @Test
@@ -39,11 +41,11 @@ public class MediaRatingRepositoryTest {
         Media media = new Media(184029L);
         mediaRepository.save(media);
 
-        Rating rating = new MediaRating(user,true);
+        Rating rating = new MediaLike(user,true);
         rating.setRatableEntity(media);
-        mediaRatingRepository.save(rating);
+        mediaLikeRepository.save(rating);
 
-        Optional<Rating> expect = mediaRatingRepository.findByUserIdAndRatableEntityId(user.getId(), media.getId());
+        Optional<MediaLike> expect = mediaLikeRepository.getMediaLikeByUserIdAndMediaId(user.getId(), media.getId());
 
         assertTrue(expect.isPresent());
         assertTrue(expect.get().getIsLiked());
@@ -57,18 +59,18 @@ public class MediaRatingRepositoryTest {
         Media media = new Media(123123L);
         mediaRepository.save(media);
 
-        Rating rating = new MediaRating(user,true);
+        Rating rating = new MediaLike(user,true);
         rating.setRatableEntity(media);
-        mediaRatingRepository.save(rating);
+        mediaLikeRepository.save(rating);
 
         Media media2 = new Media(444444L);
         mediaRepository.save(media2);
 
-        Rating rating2 = new MediaRating(user,true);
+        Rating rating2 = new MediaLike(user,true);
         rating2.setRatableEntity(media2);
-        mediaRatingRepository.save(rating2);
+        mediaLikeRepository.save(rating2);
 
-        Optional<List<Rating>> expect = mediaRatingRepository.findAllByUserId(user.getId());
+        Optional<List<MediaLike>> expect = mediaLikeRepository.getAllMediaLikesByUserId(user.getId());
         assertTrue(expect.get().size() == 2);
 
     }
@@ -84,15 +86,15 @@ public class MediaRatingRepositoryTest {
         Media media = new Media(111111L);
         mediaRepository.save(media);
 
-        Rating rating = new MediaRating(user,true);
+        Rating rating = new MediaLike(user,true);
         rating.setRatableEntity(media);
-        mediaRatingRepository.save(rating);
+        mediaLikeRepository.save(rating);
 
-        Rating rating2 = new MediaRating(user2,true);
+        Rating rating2 = new MediaLike(user2,true);
         rating2.setRatableEntity(media);
-        mediaRatingRepository.save(rating2);
+        mediaLikeRepository.save(rating2);
 
-        Optional<List<Rating>> expect = mediaRatingRepository.findAllByRatableEntityId(media.getId());
+        Optional<List<MediaLike>> expect = mediaLikeRepository.getAllMediaLikesByRatableEntityId(media.getId());
 
         System.out.println("Test Ratings: ");
         for (Rating r : expect.get()) {
