@@ -2,7 +2,6 @@ package com.watchpad.watchpadbackend.MediaLike;
 
 import com.watchpad.watchpadbackend.Media.Media;
 import com.watchpad.watchpadbackend.Media.MediaRepository;
-import com.watchpad.watchpadbackend.MediaRating.MediaRating;
 import com.watchpad.watchpadbackend.Rating.Rating;
 import com.watchpad.watchpadbackend.User.User;
 import com.watchpad.watchpadbackend.User.UserRepository;
@@ -98,6 +97,7 @@ public class MediaLikeService {
         return new ResponseEntity<>(mediaLikeRepository.getMediaLikeByUserIdAndMediaId(userId, mediaId), HttpStatus.OK);
     }
 
+    @Transactional
     public ResponseEntity<String> deleteLike(Long userId, Long mediaId) {
         Optional<MediaLike> mediaLikeOptional = mediaLikeRepository.getMediaLikeByUserIdAndMediaId(userId, mediaId);
         if (mediaLikeOptional.isPresent()) {

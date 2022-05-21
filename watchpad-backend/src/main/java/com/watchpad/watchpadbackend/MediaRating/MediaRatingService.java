@@ -94,6 +94,7 @@ public class MediaRatingService {
         return new ResponseEntity<>(mediaRatingRepository.getMediaRatingByUserIdAndMediaId(userId, mediaId), HttpStatus.OK);
     }
 
+    @Transactional
     public ResponseEntity<String> deleteRating(Long userId, Long mediaId) {
         Optional<MediaRating> mediaRatingOptional = mediaRatingRepository.getMediaRatingByUserIdAndMediaId(userId, mediaId);
         if (mediaRatingOptional.isPresent()) {
