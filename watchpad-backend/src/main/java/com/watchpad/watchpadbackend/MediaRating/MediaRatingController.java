@@ -32,9 +32,6 @@ public class MediaRatingController {
 
     @GetMapping("/get-ratings-for-media")
     public ResponseEntity<Optional<List<MediaRating>>> getRatingsByMediaId(@Param("mediaId") Long mediaId){
-        System.out.println();
-        System.out.println("mediaId: " + mediaId);
-        System.out.println();
         return mediaRatingService.getRatingsByRatableEntityId(mediaId);
     }
 
