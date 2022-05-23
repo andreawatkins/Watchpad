@@ -1,20 +1,14 @@
 package com.watchpad.watchpadbackend.Comment;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.watchpad.watchpadbackend.CommentLike.CommentLike;
 import lombok.Data;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.watchpad.watchpadbackend.Content.Content;
 import com.watchpad.watchpadbackend.Media.Media;
@@ -32,6 +26,9 @@ public class Comment {
    @ManyToOne
    @JoinColumn(name = "media_id")
    private Media media;
+   @OneToMany(mappedBy = "comment")
+   @JsonManagedReference(value = "comment-commentLikes")
+   Set<CommentLike> likesDislikes;
    @ManyToOne
    private User user;
    private String comment_timestamp;

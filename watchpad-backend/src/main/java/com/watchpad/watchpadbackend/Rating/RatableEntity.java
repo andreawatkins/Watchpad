@@ -1,10 +1,7 @@
 package com.watchpad.watchpadbackend.Rating;
 
-import com.watchpad.watchpadbackend.User.User;
-
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -12,12 +9,6 @@ public abstract class RatableEntity {
 
     @Id
     private Long id;
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    Set<User> ratedBy = new HashSet<>();
-
-    @OneToMany(mappedBy = "ratableEntity", fetch = FetchType.LAZY)
-    Set<Rating> ratings = new HashSet<>();
 
     public RatableEntity() {
 

@@ -14,7 +14,7 @@ public abstract class Rating {
     @ManyToOne
     @MapsId("userId")
     @JoinColumn(name = "user_id")
-    @JsonBackReference
+    @JsonBackReference(value = "rating-user")
     User user;
 
     @ManyToOne(cascade = CascadeType.ALL, optional = false)
