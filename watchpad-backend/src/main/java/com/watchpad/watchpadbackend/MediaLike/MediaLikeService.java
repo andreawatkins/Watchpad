@@ -41,13 +41,6 @@ public class MediaLikeService {
     @Transactional
     public ResponseEntity<String> saveOrUpdateMediaLike(Long userId, Long mediaId, boolean isliked){
         try {
-            System.out.println();
-            System.out.println("SAVE OR UPDATE NEW MEDIA LIKE");
-            System.out.println("userId " + userId);
-            System.out.println("mediaId " + mediaId);
-            System.out.println("isliked " + isliked);
-            System.out.println();
-
             //If user does not exist in user repo, return conflict
             Optional<User> userOptional = userRepository.findById(userId);
             if(!userOptional.isPresent()){
@@ -101,7 +94,7 @@ public class MediaLikeService {
     public ResponseEntity<String> deleteLike(Long userId, Long mediaId) {
         Optional<MediaLike> mediaLikeOptional = mediaLikeRepository.getMediaLikeByUserIdAndMediaId(userId, mediaId);
         if (mediaLikeOptional.isPresent()) {
-            mediaLikeRepository.deleteById(mediaLikeOptional.get().getId());
+            mediaLikeRepository.deleteById(userId, mediaId);
             return new ResponseEntity<>("Media like deleted!", HttpStatus.OK);
         } else {
             return new ResponseEntity<>("No existing media like to delete!", HttpStatus.CONFLICT);

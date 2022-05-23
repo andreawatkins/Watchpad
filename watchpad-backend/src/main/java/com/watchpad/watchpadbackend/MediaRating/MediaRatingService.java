@@ -34,13 +34,6 @@ public class MediaRatingService {
     @Transactional
     public ResponseEntity<String> saveOrUpdateMediaRating(Long userId, Long mediaId, Float rating){
         try {
-            System.out.println();
-            System.out.println("SAVE OR UPDATE NEW MEDIA RATING");
-            System.out.println("userId " + userId);
-            System.out.println("mediaId " + mediaId);
-            System.out.println("rating " + rating);
-            System.out.println();
-
             //If user does not exist in user repo, return conflict
             Optional<User> userOptional = userRepository.findById(userId);
             if(!userOptional.isPresent()){
@@ -98,7 +91,7 @@ public class MediaRatingService {
     public ResponseEntity<String> deleteRating(Long userId, Long mediaId) {
         Optional<MediaRating> mediaRatingOptional = mediaRatingRepository.getMediaRatingByUserIdAndMediaId(userId, mediaId);
         if (mediaRatingOptional.isPresent()) {
-            mediaRatingRepository.deleteById(mediaRatingOptional.get().getId());
+            mediaRatingRepository.deleteById(userId, mediaId);
             return new ResponseEntity<>("Media rating deleted!", HttpStatus.OK);
         } else {
             return new ResponseEntity<>("No existing media rating to delete!", HttpStatus.CONFLICT);

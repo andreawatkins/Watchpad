@@ -16,16 +16,17 @@ public interface MediaRatingRepository extends JpaRepository<Rating, Long> {
 
     @Modifying
     @Query("UPDATE MediaRating r SET r.rating = :rating WHERE r.id = :ratingId")
-    void setRating(@Param("rating") Float rating, @Param("ratingId") RatingKey ratingId);
+    void setRating(Float rating, RatingKey ratingId);
 
     @Modifying
-    void deleteById(@Param("ratingId") RatingKey ratingId);
+    @Query("DELETE FROM MediaRating WHERE id.userId = ?1 AND id.ratableEntityId = ?2")
+    void deleteById(Long userId, Long ratableEntityId);
 
     @Query("SELECT AVG(r.rating) FROM MediaRating r WHERE r.id.ratableEntityId = ?1")
-    Optional<Float> getAverageRatingForRatableEntityId(@Param("entityId") Long entityId);
+    Optional<Float> getAverageRatingForRatableEntityId(Long entityId);
 
     @Query("SELECT COUNT(r) FROM MediaRating r WHERE r.id.ratableEntityId = ?1")
-    long getCountOfRatingsByEntityId(@Param("entityId") Long entityId);
+    long getCountOfRatingsByEntityId(Long entityId);
 
     @Query("SELECT r FROM MediaRating r WHERE r.id.userId = ?1 AND r.id.ratableEntityId = ?2")
     Optional<MediaRating> getMediaRatingByUserIdAndMediaId (Long userId, Long ratableEntityId);
