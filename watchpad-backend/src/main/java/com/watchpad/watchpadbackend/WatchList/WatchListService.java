@@ -57,4 +57,8 @@ public class WatchListService {
         return new ResponseEntity(watchListRepository.findByUserId(userId), HttpStatus.OK);
     }
 
+    public ResponseEntity<Optional<List<Long>>> getMediaIds(Long userId) {
+        return new ResponseEntity<>(watchListRepository.findAllMediaInWatchlist(userId), HttpStatus.OK);
+    }
+
 }

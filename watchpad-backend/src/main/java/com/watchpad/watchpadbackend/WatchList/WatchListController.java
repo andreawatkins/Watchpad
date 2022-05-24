@@ -39,4 +39,9 @@ public class WatchListController {
         return watchListService.getWatchList(userId);
     }
 
+    @GetMapping("/get-watchlist-media")
+    public ResponseEntity<Optional<List<Long>>> getMediaIds(@Param("userId") Long userId) {
+        return watchListService.getMediaIds(userId);
+    }
+
 }
