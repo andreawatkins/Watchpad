@@ -14,6 +14,9 @@ public interface WatchListRepository extends JpaRepository<WatchListEntry, Long>
 
     //Optional<List<WatchListEntry>> findByMedia(Media media);
 
+    @Query("SELECT w.media.id FROM WatchListEntry w WHERE w.user.id = ?1")
+    Optional<List<Long>> findAllMediaInWatchlist(Long userId);
+
     @Query("SELECT w FROM WatchListEntry w WHERE w.user.id = ?1")
     Optional<List<WatchListEntry>> findByUserId(Long userId);
 
