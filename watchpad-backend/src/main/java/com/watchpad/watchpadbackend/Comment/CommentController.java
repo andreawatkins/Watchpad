@@ -9,13 +9,10 @@ import com.watchpad.watchpadbackend.User.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController()
@@ -48,6 +45,12 @@ public class CommentController {
     @GetMapping("/get")
     public ResponseEntity<Optional<List<Comment>>> getCommentsWithTime(@Param("mediaId") Long mediaId) {
         return commentService.getCommentsWithTime(mediaId);
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> removeComment(@RequestBody Comment comment) {
+        return commentService.removeComment(comment);
+
     }
 
 }

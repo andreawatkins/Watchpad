@@ -60,4 +60,11 @@ public class CommentService {
         }
         return new ResponseEntity(comments, HttpStatus.OK);
     }
+
+    public ResponseEntity<String> removeComment(Comment comment){
+        commentRepo.deleteById(comment.getComment_id());
+
+        return new ResponseEntity("Comment deleted!", HttpStatus.CREATED);
+        
+    }
 }
