@@ -36,10 +36,8 @@ public class CommentService {
             Media m = new Media(comment.getMedia().getId());
             mediaRepo.save(m);
         }
-        commentRepo.save(comment);
-
-        return new ResponseEntity("Comment created!", HttpStatus.CREATED);
-
+        Comment newComment = commentRepo.saveAndFlush(comment);
+        return new ResponseEntity(newComment, HttpStatus.CREATED);
     }
 
     public ResponseEntity<List<Comment>> getAllComments() {
