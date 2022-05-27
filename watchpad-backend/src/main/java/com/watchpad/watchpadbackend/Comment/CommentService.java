@@ -54,17 +54,17 @@ public class CommentService {
     }
 
     public ResponseEntity<Optional<List<Comment>>> getCommentsWithTime(Long mediaId) {
-        Optional<List<Comment>> comments = commentRepo.findByMedia(mediaId);
+        Optional<List<Comment>> comments = commentRepo.findByTimestamp(mediaId);
         if (comments.isEmpty()) {
             throw new IllegalStateException("No comment exists for that media!");
         }
         return new ResponseEntity(comments, HttpStatus.OK);
     }
 
-    public ResponseEntity<String> removeComment(Comment comment){
+    public ResponseEntity<String> removeComment(Comment comment) {
         commentRepo.deleteById(comment.getComment_id());
 
         return new ResponseEntity("Comment deleted!", HttpStatus.CREATED);
-        
+
     }
 }
