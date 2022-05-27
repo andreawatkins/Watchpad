@@ -30,7 +30,8 @@ public class WatchListService {
         }
 
         watchListRepository.save(watchListEntry);
-        return new ResponseEntity("Media added to watchlist!", HttpStatus.OK);
+        WatchListEntry newWatchlistEntry = watchListRepository.saveAndFlush(watchListEntry);
+        return new ResponseEntity(newWatchlistEntry, HttpStatus.CREATED);
 
     }
 
