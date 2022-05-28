@@ -30,6 +30,14 @@ public class User {
         this.password = password;
     }
 
+    public User(Long id, String email, String username, String password, String photo) {
+        this.id = id;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.photo = photo;
+    }
+
     public void addMediaToWatchList(WatchListEntry media) {
     }
 
