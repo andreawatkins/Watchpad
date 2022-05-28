@@ -1,1 +1,0 @@
-INSERT INTO media(id) VALUES (1);

@@ -1,0 +1,1 @@
+INSERT INTO MEDIA (id) VALUES (1);
