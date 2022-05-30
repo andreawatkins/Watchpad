@@ -3,11 +3,13 @@ package com.watchpad.watchpadbackend.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.watchpad.watchpadbackend.WatchList.WatchListEntry;
 import lombok.Data;
+import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
 
 @Entity
 @Data
+@Proxy(lazy=false)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
