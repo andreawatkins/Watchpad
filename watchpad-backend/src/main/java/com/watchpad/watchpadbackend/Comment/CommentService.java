@@ -67,4 +67,13 @@ public class CommentService {
         return new ResponseEntity("Comment deleted!", HttpStatus.CREATED);
 
     }
+
+    public ResponseEntity<Optional<List<Long>>> getMostCommentedMedia() {
+        Optional<List<Long>> mediaIds = commentRepo.findMostCommentedMedia();
+        if (mediaIds.isEmpty()) {
+            throw new IllegalStateException("No media exists!");
+        }
+        return new ResponseEntity(mediaIds, HttpStatus.OK);
+
+    }
 }
