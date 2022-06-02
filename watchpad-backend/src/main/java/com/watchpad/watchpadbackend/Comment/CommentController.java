@@ -47,6 +47,11 @@ public class CommentController {
         return commentService.getCommentsWithTime(mediaId);
     }
 
+    @GetMapping("/get-most-popular")
+    public ResponseEntity<Optional<List<Long>>> getMostCommentedMedia() {
+        return commentService.getMostCommentedMedia();
+    }
+
     @DeleteMapping("/delete")
     public ResponseEntity<String> removeComment(@RequestBody Comment comment) {
         return commentService.removeComment(comment);
