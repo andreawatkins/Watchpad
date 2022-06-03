@@ -33,15 +33,15 @@ public class Comment {
    @ManyToOne
    private User user;
    private String comment_timestamp;
-   @Column(nullable = true)
    private String duration_timestamp;
    // @OneToOne
    @Column(columnDefinition = "TEXT")
    private String content;
    private boolean spoiler;
+   private boolean review;
 
    public Comment(Long comment_id, Media media, User user, String comment_timestamp, String duration_timestamp,
-         String content, boolean spoiler, int likes, int dislikes) {
+         String content, boolean spoiler, int likes, int dislikes, boolean review) {
 
       this.comment_id = comment_id;
       this.media = media;
@@ -50,18 +50,11 @@ public class Comment {
       this.duration_timestamp = duration_timestamp;
       this.content = content;
       this.spoiler = spoiler;
+      this.review = review;
 
    }
 
    public Comment() {
    };
-
-   @Override
-   public String toString() {
-      return "Comment{" + "id=" + this.comment_id + ", media_id='" + this.media + '\'' + ", user='" + this.user + '\'' +
-            ", timestamp='" + this.comment_timestamp + '\'' + ", content='" + this.content + '\'' + ", spoiler='"
-            + this.spoiler + '\'' +
-            +'}';
-   }
 
 }

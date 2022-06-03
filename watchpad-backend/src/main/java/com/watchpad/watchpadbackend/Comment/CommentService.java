@@ -54,18 +54,40 @@ public class CommentService {
     }
 
     public ResponseEntity<Optional<List<Comment>>> getCommentsWithTime(Long mediaId) {
-        Optional<List<Comment>> comments = commentRepo.findByMedia(mediaId);
+        Optional<List<Comment>> comments = commentRepo.findByTimestamp(mediaId);
         if (comments.isEmpty()) {
             throw new IllegalStateException("No comment exists for that media!");
         }
         return new ResponseEntity(comments, HttpStatus.OK);
     }
 
-    public ResponseEntity<String> removeComment(Comment comment){
+    public ResponseEntity<String> removeComment(Comment comment) {
         commentRepo.deleteById(comment.getComment_id());
 
+ deleting-comment
         return new ResponseEntity(comment, HttpStatus.CREATED);
         
+
+
+    }
+
+    public ResponseEntity<Optional<List<Long>>> getMostCommentedMedia() {
+        Optional<List<Long>> mediaIds = commentRepo.findMostCommentedMedia();
+        if (mediaIds.isEmpty()) {
+            throw new IllegalStateException("No media exists!");
+        }
+        return new ResponseEntity(mediaIds, HttpStatus.OK);
+
+    }
+
+    public ResponseEntity<Optional<List<Comment>>> getMostLikedComments(Long mediaId) {
+        Optional<List<Comment>> comments = commentRepo.findMostLikedComments(mediaId);
+        if (comments.isEmpty()) {
+            throw new IllegalStateException("No comment exists for that media!");
+        } else {
+            return new ResponseEntity<>(comments, HttpStatus.OK);
+        }
+
     }
     public ResponseEntity<String> updateComment(long id, String content){
         commentRepo.updateComment(id,content); 

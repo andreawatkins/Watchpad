@@ -63,7 +63,7 @@ public class WatchListServiceTest {
         WatchListEntry capturedWatchListEntry = watchListEntryArgumentCaptor.getValue();
         assertEquals(watchListEntry, capturedWatchListEntry);
         ResponseEntity<WatchListEntry> actual = watchListService.addToWatchList(watchListEntry);
-        ResponseEntity<String> expected = new ResponseEntity<>("Media added to watchlist!", HttpStatus.OK);
+        ResponseEntity<String> expected = new ResponseEntity<>(HttpStatus.CREATED);
         assertEquals(expected, actual);
 
     }

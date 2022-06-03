@@ -3,11 +3,13 @@ package com.watchpad.watchpadbackend.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.watchpad.watchpadbackend.WatchList.WatchListEntry;
 import lombok.Data;
+import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
 
 @Entity
 @Data
+@Proxy(lazy=false)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,6 +30,14 @@ public class User {
         this.email = email;
         this.username = username;
         this.password = password;
+    }
+
+    public User(Long id, String email, String username, String password, String photo) {
+        this.id = id;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.photo = photo;
     }
 
     public void addMediaToWatchList(WatchListEntry media) {
