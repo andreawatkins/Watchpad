@@ -49,6 +49,10 @@ public class CommentLikeService {
             Optional<CommentLike> commentLikeOptional = commentLikeRepository.getCommentLikeByUserIdAndCommentId(userId, commentId);
             if (commentLikeOptional.isPresent()) {
                 commentLikeRepository.setIsLiked(isLiked, commentLikeOptional.get().getId());
+
+                Long score = (commentLikeRepository.getCountOfLikesByCommentId(commentId) - commentLikeRepository.getCountOfDislikesByCommentId(commentId));
+                commentRepository.updateCommentScore(score, commentId);
+
                 return new ResponseEntity("Existing comment like/dislike updated with new value!", HttpStatus.CREATED);
             }
 
@@ -59,6 +63,9 @@ public class CommentLikeService {
             } else {
                 CommentLike newCommentLike = new CommentLike(userOptional.get(), commentOptional.get(),isLiked);
                 commentLikeRepository.save(newCommentLike);
+
+                Long score = (commentLikeRepository.getCountOfLikesByCommentId(commentId) - commentLikeRepository.getCountOfDislikesByCommentId(commentId));
+                commentRepository.updateCommentScore(score, commentId);
 
                 return new ResponseEntity("Comment like/dislike registered!", HttpStatus.CREATED);
             }
@@ -77,6 +84,10 @@ public class CommentLikeService {
         Optional<CommentLike> commentLikeOptional = commentLikeRepository.getCommentLikeByUserIdAndCommentId(userId, commentId);
         if (commentLikeOptional.isPresent()) {
             commentLikeRepository.deleteById(userId, commentId);
+
+            Long score = (commentLikeRepository.getCountOfLikesByCommentId(commentId) - commentLikeRepository.getCountOfDislikesByCommentId(commentId));
+            commentRepository.updateCommentScore(score, commentId);
+
             return new ResponseEntity<>("Comment like deleted!", HttpStatus.OK);
         } else {
             return new ResponseEntity<>("No existing comment like to delete!", HttpStatus.CONFLICT);

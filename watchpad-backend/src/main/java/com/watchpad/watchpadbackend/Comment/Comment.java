@@ -56,4 +56,5 @@ public class Comment {
    public Comment() {
    };
 
+   Long score;
 }

@@ -1,6 +1,8 @@
 package com.watchpad.watchpadbackend.Comment;
 
+import com.watchpad.watchpadbackend.CommentLike.CommentLikeKey;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -27,5 +29,12 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
       + " GROUP BY cl.comment_id, c.comment_timestamp, c.content, c.duration_timestamp, c.review, c.spoiler, c.media_id, c.user_id, cl.is_liked"
       + " ORDER BY cl.is_liked DESC, COUNT(is_liked) DESC", nativeQuery = true)
   Optional<List<Comment>> findMostLikedComments(Long mediaId);
+
+  @Query("SELECT c FROM Comment c WHERE c.media.id = ?1 AND c.review = false")
+  Optional<List<Comment>> findDurationCommentsByMedia(Long mediaId);
+
+  @Modifying
+  @Query("UPDATE Comment c SET c.score = :score WHERE c.comment_id = :commentId")
+  void updateCommentScore(Long score, Long commentId);
 
 }
