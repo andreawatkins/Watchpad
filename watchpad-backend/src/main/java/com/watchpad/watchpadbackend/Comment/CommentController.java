@@ -53,4 +53,11 @@ public class CommentController {
 
     }
 
+    @PutMapping("/edit")
+    public ResponseEntity<String> updateComment(@RequestBody Long id, String content){
+        return commentService.updateComment(id, content);
+        
+    }
+
+
 }

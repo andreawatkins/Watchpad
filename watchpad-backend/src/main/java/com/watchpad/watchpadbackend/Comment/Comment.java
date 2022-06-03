@@ -26,9 +26,10 @@ public class Comment {
    @ManyToOne
    @JoinColumn(name = "media_id")
    private Media media;
-   @OneToMany(mappedBy = "comment")
+   @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, orphanRemoval = true)
    @JsonManagedReference(value = "comment-commentLikes")
-   Set<CommentLike> likesDislikes;
+   
+   Set<CommentLike> likesDislikes; 
    @ManyToOne
    private User user;
    private String comment_timestamp;
