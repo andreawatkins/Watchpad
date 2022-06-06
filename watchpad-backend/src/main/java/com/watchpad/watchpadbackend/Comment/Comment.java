@@ -39,8 +39,10 @@ public class Comment {
    private boolean spoiler;
    private boolean review;
 
+   private String gifURL;
+
    public Comment(Long comment_id, Media media, User user, String comment_timestamp, String duration_timestamp,
-         String content, boolean spoiler, int likes, int dislikes, boolean review) {
+         String content, boolean spoiler, String gifURL, int likes, int dislikes, boolean review) {
 
       this.comment_id = comment_id;
       this.media = media;
@@ -50,6 +52,7 @@ public class Comment {
       this.content = content;
       this.spoiler = spoiler;
       this.review = review;
+      this.gifURL = gifURL;
 
    }
 

@@ -177,6 +177,7 @@ public class TestDataInit {
                         durationTimestamp,
                         shuffledComments.get(i-1),
                         (Math.random() < spoilersRatio),
+                        "",
                         0,
                         0,
                         (Math.random() < durationCommentsToReviewCommentsRatio)
