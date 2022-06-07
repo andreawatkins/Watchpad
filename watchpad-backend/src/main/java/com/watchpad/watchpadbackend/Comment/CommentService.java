@@ -44,6 +44,10 @@ public class CommentService {
         return new ResponseEntity<>(commentRepo.findAll(), HttpStatus.OK);
     }
 
+    public ResponseEntity<Comment> getCommentById(Long id) {
+        return new ResponseEntity(commentRepo.findById(id), HttpStatus.OK);
+    }
+
     public ResponseEntity<Optional<List<Comment>>> getCommentsByMedia(Long mediaId) {
         Optional<List<Comment>> comments = commentRepo.findByMedia(mediaId);
         if (comments.isEmpty()) {
@@ -97,17 +101,12 @@ public class CommentService {
     public ResponseEntity<String> updateComment(Long comment_id, Comment newComment) {
         try {
             Comment oldComment = commentRepo.findById(comment_id).get();
-            oldComment.setMedia(newComment.getMedia());
-            oldComment.setLikesDislikes(newComment.getLikesDislikes());
-            oldComment.setUser(newComment.getUser());
-            oldComment.setComment_timestamp(newComment.getComment_timestamp());
-            oldComment.setDuration_timestamp(newComment.getDuration_timestamp());
+            
             oldComment.setContent(newComment.getContent());
             oldComment.setSpoiler(newComment.isSpoiler());
-            oldComment.setReview(newComment.isReview());
-            oldComment.setGifURL(newComment.getGifURL());
+           
             commentRepo.save(oldComment);
-            return new ResponseEntity<>("Comment successfully updated", HttpStatus.ACCEPTED);
+            return new ResponseEntity(oldComment, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.toString(), HttpStatus.NOT_FOUND);
         }
