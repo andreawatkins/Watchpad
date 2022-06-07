@@ -21,7 +21,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      run: mvn -B package --file ./watchpad-backend/pom.xml
+      run: mvn -B package --file cd popom.xml
 
   run_tests:
     needs: build
@@ -36,6 +36,6 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Run tests with Maven
-      run: mvn -B test --file ./watchpad-backend/pom.xml
+      run: mvn -B test --file pom.xml
 
 
