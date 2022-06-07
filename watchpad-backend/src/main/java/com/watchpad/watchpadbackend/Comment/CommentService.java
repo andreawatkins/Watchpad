@@ -15,7 +15,7 @@ import java.util.Optional;
 import com.watchpad.watchpadbackend.Media.Media;
 import com.watchpad.watchpadbackend.Media.MediaRepository;
 import com.watchpad.watchpadbackend.User.User;
-import com.watchpad.watchpadbackend.Comment.CommentDto;
+
 
 @Service
 public class CommentService {
@@ -64,7 +64,7 @@ public class CommentService {
     public ResponseEntity<String> removeComment(Comment comment) {
         commentRepo.deleteById(comment.getComment_id());
 
-        return new ResponseEntity("Comment deleted!", HttpStatus.CREATED);
+        return new ResponseEntity(comment, HttpStatus.CREATED);
 
     }
 
@@ -91,6 +91,25 @@ public class CommentService {
             throw new IllegalStateException("No comments exist for that media!");
         } else {
             return new ResponseEntity<>(comments, HttpStatus.OK);
+        }
+    }
+
+    public ResponseEntity<String> updateComment(Long comment_id, Comment newComment) {
+        try {
+            Comment oldComment = commentRepo.findById(comment_id).get();
+            oldComment.setMedia(newComment.getMedia());
+            oldComment.setLikesDislikes(newComment.getLikesDislikes());
+            oldComment.setUser(newComment.getUser());
+            oldComment.setComment_timestamp(newComment.getComment_timestamp());
+            oldComment.setDuration_timestamp(newComment.getDuration_timestamp());
+            oldComment.setContent(newComment.getContent());
+            oldComment.setSpoiler(newComment.isSpoiler());
+            oldComment.setReview(newComment.isReview());
+            oldComment.setGifURL(newComment.getGifURL());
+            commentRepo.save(oldComment);
+            return new ResponseEntity<>("Comment successfully updated", HttpStatus.ACCEPTED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.toString(), HttpStatus.NOT_FOUND);
         }
     }
 }
