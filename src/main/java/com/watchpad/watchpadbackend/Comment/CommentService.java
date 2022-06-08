@@ -89,8 +89,8 @@ public class CommentService {
             return new ResponseEntity<>(comments, HttpStatus.OK);
         }
     }
-    public ResponseEntity<Optional<List<Comment>>> getDurationCommentsByMedia(Long mediaId) {
-        Optional<List<Comment>> comments = commentRepo.findDurationCommentsByMedia(mediaId);
+    public ResponseEntity<Optional<List<Comment>>> getReviewsByMedia(Long mediaId) {
+        Optional<List<Comment>> comments = commentRepo.findReviewsByMedia(mediaId);
         if (comments.isEmpty()) {
             throw new IllegalStateException("No comments exist for that media!");
         } else {
