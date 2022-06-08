@@ -75,6 +75,12 @@ public class CommentController {
 
     }
 
+    @GetMapping("/get-reviews-by-follower")
+    public ResponseEntity<Optional<List<Comment>>> getReviewsByFollow(@Param("mediaId") Long mediaId,
+            @Param("username") String username) {
+        return commentService.getReviewsByFollower(username, mediaId);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<String> updateComment(@PathVariable Long id, @RequestBody JSONObject values) {
         Comment comment = new Gson().fromJson(values.toJSONString(), Comment.class);

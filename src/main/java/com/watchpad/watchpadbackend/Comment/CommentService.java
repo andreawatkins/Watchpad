@@ -120,4 +120,14 @@ public class CommentService {
             return new ResponseEntity<>(e.toString(), HttpStatus.NOT_FOUND);
         }
     }
+
+    public ResponseEntity<Optional<List<Comment>>> getReviewsByFollower(String username, Long mediaId) {
+        Optional<List<Comment>> comments = commentRepo.findReviewsByFollower(username, mediaId);
+        if (comments.isEmpty()) {
+            throw new IllegalStateException("No reviews exist.");
+        } else {
+            return new ResponseEntity<>(comments, HttpStatus.OK);
+        }
+
+    }
 }
