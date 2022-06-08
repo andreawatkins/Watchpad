@@ -16,7 +16,6 @@ import com.watchpad.watchpadbackend.Media.Media;
 import com.watchpad.watchpadbackend.Media.MediaRepository;
 import com.watchpad.watchpadbackend.User.User;
 
-
 @Service
 public class CommentService {
 
@@ -81,14 +80,15 @@ public class CommentService {
 
     }
 
-    public ResponseEntity<Optional<List<Comment>>> getMostLikedComments(Long mediaId) {
-        Optional<List<Comment>> comments = commentRepo.findMostLikedComments(mediaId);
+    public ResponseEntity<Optional<List<Comment>>> getMostLikedReviews(Long mediaId) {
+        Optional<List<Comment>> comments = commentRepo.findMostLikedReviews(mediaId);
         if (comments.isEmpty()) {
             throw new IllegalStateException("No comment exists for that media!");
         } else {
             return new ResponseEntity<>(comments, HttpStatus.OK);
         }
     }
+
     public ResponseEntity<Optional<List<Comment>>> getReviewsByMedia(Long mediaId) {
         Optional<List<Comment>> comments = commentRepo.findReviewsByMedia(mediaId);
         if (comments.isEmpty()) {
@@ -99,22 +99,21 @@ public class CommentService {
     }
 
     public ResponseEntity<Optional<List<Comment>>> getDurationCommentsByMediaSorted(Long mediaId) {
-         Optional<List<Comment>> comments = commentRepo.findDurationCommentsByMediaSorted(mediaId);
+        Optional<List<Comment>> comments = commentRepo.findDurationCommentsByMediaSorted(mediaId);
         if (comments.isEmpty()) {
             throw new IllegalStateException("No comments exist for that media!");
         } else {
             return new ResponseEntity<>(comments, HttpStatus.OK);
         }
     }
-    
 
     public ResponseEntity<String> updateComment(Long comment_id, Comment newComment) {
         try {
             Comment oldComment = commentRepo.findById(comment_id).get();
-            
+
             oldComment.setContent(newComment.getContent());
             oldComment.setSpoiler(newComment.isSpoiler());
-           
+
             commentRepo.save(oldComment);
             return new ResponseEntity(oldComment, HttpStatus.OK);
         } catch (Exception e) {

@@ -65,8 +65,8 @@ public class CommentController {
     }
 
     @GetMapping("/get-most-liked")
-    public ResponseEntity<Optional<List<Comment>>> getMostLikedComments(@Param("mediaId") Long mediaId) {
-        return commentService.getMostLikedComments(mediaId);
+    public ResponseEntity<Optional<List<Comment>>> getMostLikedReviews(@Param("mediaId") Long mediaId) {
+        return commentService.getMostLikedReviews(mediaId);
     }
 
     @DeleteMapping("/delete")
