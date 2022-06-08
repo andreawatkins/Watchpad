@@ -24,8 +24,8 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
   @Query(value = "SELECT media_id, count(comment_id) FROM Comments GROUP BY media_id ORDER BY Count(comment_id) DESC FETCH FIRST 10 ROWS ONLY", nativeQuery = true)
   Optional<List<Long>> findMostCommentedMedia();
 
-  @Query(value = "SELECT * FROM comments WHERE media_id = ?1 AND review = false ORDER BY score DESC", nativeQuery = true)
-  Optional<List<Comment>> findMostLikedComments(Long mediaId);
+  @Query(value = "SELECT * FROM comments WHERE media_id = ?1 AND review = true ORDER BY score DESC", nativeQuery = true)
+  Optional<List<Comment>> findMostLikedReviews(Long mediaId);
 
   @Query("SELECT c FROM Comment c WHERE c.media.id = ?1 AND c.review = true")
   Optional<List<Comment>> findReviewsByMedia(Long mediaId);
