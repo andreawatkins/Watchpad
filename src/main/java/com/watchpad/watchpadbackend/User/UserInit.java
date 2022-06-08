@@ -18,8 +18,8 @@ public class UserInit {
 
     @PostConstruct
     public void init(){
-        if(userRepository.findAll().isEmpty()){
+     //   if(userRepository.findAll().isEmpty()){
            // userRepository.save(new User(1L, "test@test.com", "test", new BCryptPasswordEncoder().encode("test"), "default-photo"));
-        }
+       // }
     }
 }

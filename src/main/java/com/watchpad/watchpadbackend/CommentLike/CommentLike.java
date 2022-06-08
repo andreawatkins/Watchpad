@@ -7,7 +7,7 @@ import com.watchpad.watchpadbackend.User.User;
 import javax.persistence.*;
 
 @Entity
-@Table
+@Table(name = "comment_like")
 public class CommentLike {
 
     @EmbeddedId

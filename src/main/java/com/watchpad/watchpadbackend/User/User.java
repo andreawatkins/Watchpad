@@ -9,7 +9,8 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@Proxy(lazy=false)
+//@Proxy(lazy=false)
+@Table(name="user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

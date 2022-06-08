@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table
+@Table(name="media_like")
 public class MediaLike extends Rating {
     private boolean isLiked;
 

@@ -5,7 +5,7 @@ import com.watchpad.watchpadbackend.User.User;
 import javax.persistence.*;
 
 @Entity
-@Table
+@Table(name = "media_rating")
 public class MediaRating extends Rating {
 
     private Float rating;

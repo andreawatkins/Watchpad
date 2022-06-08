@@ -62,7 +62,10 @@ public class TestDataInit {
     @Transactional
 
     public void init() {
+        /*
+
         if(userRepository.findAll().isEmpty()) {
+
 
             //Users
             Long userId = 1L;
@@ -218,5 +221,7 @@ public class TestDataInit {
             }
 
         }
+
+         */
     }
 }
