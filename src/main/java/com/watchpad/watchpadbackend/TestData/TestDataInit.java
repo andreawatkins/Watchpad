@@ -62,6 +62,7 @@ public class TestDataInit {
     @Transactional
 
     public void init() {
+        /*
         if(userRepository.findAll().isEmpty()) {
 
             //Users
@@ -218,5 +219,7 @@ public class TestDataInit {
             }
 
         }
+
+         */
     }
 }
