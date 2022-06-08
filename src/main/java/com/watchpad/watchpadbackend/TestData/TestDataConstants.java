@@ -76,30 +76,30 @@ public final class TestDataConstants {
             5.0F
     };
 
-    public static final String[] testDurationTimestamps = new String[]{
-            "00:00:30",
-            "00:01:00",
-            "00:01:30",
-            "00:02:00",
-            "00:02:30",
-            "00:03:00",
-            "00:03:30",
-            "00:04:00",
-            "00:04:30",
-            "00:05:00",
-            "00:05:30",
-            "00:06:00",
-            "00:06:30",
-            "00:07:00",
-            "00:07:30",
-            "00:08:00",
-            "00:08:30",
-            "00:09:00",
-            "00:09:30",
-            "00:10:00",
-            "00:10:30",
-            "00:11:00",
-            "00:11:30"
+    public static final int[] testDurationTimestamps = new int[]{
+            30,
+            60,
+            90,
+            120,
+            150,
+            180,
+            210,
+            240,
+            270,
+            300,
+            330,
+            360,
+            390,
+            420,
+            450,
+            480,
+            510,
+            540,
+            590,
+            600,
+            630,
+            660,
+            690
     };
 
     public static final String[] testPostTimestamps = new String[]{

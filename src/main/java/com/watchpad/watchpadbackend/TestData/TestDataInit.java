@@ -168,7 +168,7 @@ public class TestDataInit {
                 Media media = mediaRepository.getById(testMediaIds[(int) Math.floor(Math.random() * testMediaIds.length)]);
                 Hibernate.initialize(media);
 
-                String durationTimestamp = testDurationTimestamps[(int) Math.floor(Math.random() * testDurationTimestamps.length)];
+                int durationTimestamp = testDurationTimestamps[(int) Math.floor(Math.random() * testDurationTimestamps.length)];
 
                 Comment comment = new Comment(1L,
                         media,

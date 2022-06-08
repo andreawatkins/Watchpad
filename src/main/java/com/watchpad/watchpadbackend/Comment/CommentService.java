@@ -98,6 +98,16 @@ public class CommentService {
         }
     }
 
+    public ResponseEntity<Optional<List<Comment>>> getDurationCommentsByMediaSorted(Long mediaId) {
+         Optional<List<Comment>> comments = commentRepo.findDurationCommentsByMediaSorted(mediaId);
+        if (comments.isEmpty()) {
+            throw new IllegalStateException("No comments exist for that media!");
+        } else {
+            return new ResponseEntity<>(comments, HttpStatus.OK);
+        }
+    }
+    
+
     public ResponseEntity<String> updateComment(Long comment_id, Comment newComment) {
         try {
             Comment oldComment = commentRepo.findById(comment_id).get();

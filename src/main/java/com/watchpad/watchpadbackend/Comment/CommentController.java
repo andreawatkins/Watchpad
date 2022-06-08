@@ -49,6 +49,11 @@ public class CommentController {
         return commentService.getDurationCommentsByMedia(mediaId);
     }
 
+    @GetMapping("/get-duration-comments-by-media-sorted")
+    public ResponseEntity<Optional<List<Comment>>> getDurationCommentsByMediaSorted(@Param("mediaId") Long mediaId) {
+        return commentService.getDurationCommentsByMedia(mediaId);
+    }
+
     @GetMapping("/get")
     public ResponseEntity<Optional<List<Comment>>> getCommentsWithTime(@Param("mediaId") Long mediaId) {
         return commentService.getCommentsWithTime(mediaId);
