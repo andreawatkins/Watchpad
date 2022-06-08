@@ -30,6 +30,9 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
   @Query("SELECT c FROM Comment c WHERE c.media.id = ?1 AND c.review = false")
   Optional<List<Comment>> findDurationCommentsByMedia(Long mediaId);
 
+  @Query("SELECT c FROM Comment c WHERE c.media.id = ?1 AND c.review = false ORDER BY duration_timestamp DESC")
+  Optional<List<Comment>> findDurationCommentsByMediaSorted(Long mediaId);
+
   @Modifying
   @Query("UPDATE Comment c SET c.score = :score WHERE c.comment_id = :commentId")
   void updateCommentScore(Long score, Long commentId);

@@ -32,7 +32,7 @@ public class Comment {
    @ManyToOne
    private User user;
    private String comment_timestamp;
-   private String duration_timestamp;
+   private int duration_timestamp;
    // @OneToOne
    @Column(columnDefinition = "TEXT")
    private String content;
@@ -41,7 +41,7 @@ public class Comment {
 
    private String gifURL;
 
-   public Comment(Long comment_id, Media media, User user, String comment_timestamp, String duration_timestamp,
+   public Comment(Long comment_id, Media media, User user, String comment_timestamp, int duration_timestamp,
          String content, boolean spoiler, String gifURL, int likes, int dislikes, boolean review) {
 
       this.comment_id = comment_id;
