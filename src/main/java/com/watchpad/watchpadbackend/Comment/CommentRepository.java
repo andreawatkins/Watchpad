@@ -33,6 +33,12 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
   @Query(value = "SELECT * FROM comment WHERE media_id = ?1 AND review = false ORDER BY duration_timestamp DESC", nativeQuery = true)
   Optional<List<Comment>> findDurationCommentsByMediaSorted(Long mediaId);
 
+  @Query(value = "SELECT c.* FROM Comment c JOIN (SELECT f.followee_username, u.id FROM Follow f " +
+  "LEFT JOIN users u on u.username = f.followee_username "+
+  "WHERE f.follower_username = ?1) AS a "+
+  "ON c.user_id = a.id WHERE media_ID = ?2 AND review = true;", nativeQuery = true)
+  Optional<List<Comment>> findReviewsByFollower(String username, Long mediaId);
+
   @Modifying
   @Query("UPDATE Comment c SET c.score = :score WHERE c.comment_id = :commentId")
   void updateCommentScore(Long score, Long commentId);
