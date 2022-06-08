@@ -17,7 +17,7 @@ import com.watchpad.watchpadbackend.User.User;
 
 @Data
 @Entity
-@Table(name = "comments")
+@Table(name = "comment")
 public class Comment {
 
    @Id
@@ -26,7 +26,7 @@ public class Comment {
    @ManyToOne
    @JoinColumn(name = "media_id")
    private Media media;
-   @OneToMany(mappedBy = "comment")
+   @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL)
    @JsonManagedReference(value = "comment-commentLikes")
    Set<CommentLike> likesDislikes;
    @ManyToOne
