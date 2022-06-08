@@ -13,7 +13,7 @@ public class CorsConfiguration implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedMethods("*")
-                .allowedOrigins("http://localhost:3000", "https://watchpad-portal.herokuapp.com");
+                .allowedOrigins("http://localhost:3000", "https://watchpad-portal.herokuapp.com", "https://main.d270kt8ygn3l7.amplifyapp.com");
     }
 }
 
